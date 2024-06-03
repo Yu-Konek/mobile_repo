@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YuKonek</string>
+    <string name="title_activity_test">test</string>
 </resources>
