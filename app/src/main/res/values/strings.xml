@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">YuKonek</string>
     <string name="title_activity_test">test</string>
+    <string name="title_activity_form_user">FormUser</string>
 </resources>
