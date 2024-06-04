@@ -3,6 +3,7 @@ package com.capstone.yukonek.formuser
 import android.graphics.Outline
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +42,17 @@ import kotlin.math.exp
 class FormUser : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(
+                android.graphics.Color.TRANSPARENT,
+            )
+        )
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            )
+        )
         setContent {
             YuKonekTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -89,6 +101,7 @@ fun TitleInstruction(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
         style = AppTypography.titleMedium,
+        fontWeight = FontWeight.SemiBold,
         modifier = modifier
     )
 }
