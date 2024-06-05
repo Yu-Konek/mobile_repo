@@ -3,4 +3,5 @@
     <string name="title_activity_test">test</string>
     <string name="title_activity_form_user">FormUser</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_detail_youtuber_for_you">DetailYoutuberForYou</string>
 </resources>

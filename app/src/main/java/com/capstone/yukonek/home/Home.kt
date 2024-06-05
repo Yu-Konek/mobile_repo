@@ -291,7 +291,7 @@ fun CardListYoutuber() {
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     disabledContainerColor = MaterialTheme.colorScheme.secondary,
                     disabledContentColor = MaterialTheme.colorScheme.onSecondary
-                ), shape = RoundedCornerShape(20)
+                ), shape = RoundedCornerShape(50.dp)
             ) {
                 Text(
                     "Education",
@@ -324,7 +324,7 @@ fun CardEntertainmentNews() {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Jess dan SIca Kohl Bucin Masuk Video Populer YouTube Indonesia 2022",
+            text = "Jess dan Sisca Kohl Bucin Masuk Video Populer YouTube Indonesia 2022",
             style = AppTypography.titleMedium
         )
         Spacer(modifier = Modifier.height(8.dp))
