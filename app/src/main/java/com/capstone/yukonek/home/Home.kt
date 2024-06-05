@@ -8,10 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,12 +25,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -37,6 +42,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -45,16 +52,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.capstone.yukonek.R
+import com.capstone.yukonek.home.data.TodoItem
+import com.capstone.yukonek.ui.theme.LargeDp
+import com.capstone.yukonek.ui.theme.MediumDp
+import com.capstone.yukonek.ui.theme.OverlappingHeight
+import com.capstone.yukonek.ui.theme.TodoItemActionButtonRippleRadius
+import com.capstone.yukonek.ui.theme.TodoItemHeight
+import com.capstone.yukonek.ui.theme.TodoItemIconSize
+import com.capstone.yukonek.ui.theme.TodoItemTitleTextStyle
 import com.example.compose.ColorFamily
+import com.example.compose.TodoItemBackgroundColor
+import com.example.compose.TodoItemIconColor
+import com.example.compose.TodoItemTextColor
 import com.example.compose.YuKonekTheme
 import com.example.compose.onPrimaryLight
 import com.example.compose.primaryLight
 import com.example.ui.theme.AppTypography
 import com.google.android.material.color.MaterialColors
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class Home : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,7 +148,27 @@ fun MainView() {
 
                             Spacer(modifier = Modifier.height(24.dp))
 
-//                        Favorite Youtubers
+                        }
+                        item {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    "Reminders",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                        items(5){
+                            TodoItemUi(todoItem = TodoItem(title = "Todo Item ${it+1}"), onItemClick = {todoItem -> todoItem.isDone.value = !todoItem.isDone.value })
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
+                        item{
+                            //                        Favorite Youtubers
                             Row(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically,
@@ -153,6 +195,8 @@ fun MainView() {
                             }
 
                             Spacer(modifier = Modifier.height(24.dp))
+                        }
+                        item{
                             Row(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically,
@@ -291,6 +335,118 @@ fun CardEntertainmentNews() {
     }
 }
 
+
+@Composable
+fun TodoItemUi(
+    todoItem: TodoItem = TodoItem(title = "Todo Item"),
+    //  1. Lambda Function Parameters for Flexibility
+    onItemClick: (TodoItem) -> Unit = {},
+    onItemDelete: (TodoItem) -> Unit = {}
+) {
+    // 2. Adaptive Color Scheme
+    val backgroundColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
+    val textColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
+
+    // 3. Text Decoration
+    val textDecoration = if (todoItem.isDone.value) TextDecoration.LineThrough else null
+
+    // 4. Dynamic Icons
+    val iconId = if (todoItem.isDone.value) R.drawable.ic_selected_checkbox else R.drawable.ic_empty_checkbox
+    val iconColorFilter = if (todoItem.isDone.value) ColorFilter.tint(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)) else ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
+    val iconTintColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(TodoItemHeight),
+        elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
+        shape = RoundedCornerShape(size = MediumDp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(backgroundColor)
+                // 5. Clickable Modifier with Ripple Effect:
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = rememberRipple(bounded = true)
+                ) { onItemClick(todoItem) },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(id = iconId),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(MediumDp)
+                    .size(TodoItemIconSize),
+                colorFilter = iconColorFilter
+            )
+            Text(
+                text = todoItem.title,
+                modifier = Modifier.weight(1f),
+                style = TodoItemTitleTextStyle.copy(color = textColor),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textDecoration = textDecoration
+            )
+            // 6. IconButton for Deletion
+            IconButton(
+                onClick = { onItemDelete(todoItem) },
+                modifier = Modifier.size(TodoItemActionButtonRippleRadius)
+            ) {
+                Icon(
+                    modifier = Modifier.size(TodoItemIconSize),
+                    painter = painterResource(id = R.drawable.ic_delete),
+                    contentDescription = null,
+                    tint = iconTintColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TodoItemsContainer(
+    modifier: Modifier = Modifier,
+    todoItemsFlow: Flow<List<TodoItem>> = flowOf(listOf()),
+    onItemClick: (TodoItem) -> Unit = {},
+    onItemDelete: (TodoItem) -> Unit = {},
+    overlappingElementsHeight: Dp = 0.dp
+) {
+    // 1. Flow Data Collection
+    val todos = todoItemsFlow.collectAsState(initial = listOf()).value
+    // 2. LazyColumn Setup
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(MediumDp),
+        verticalArrangement = Arrangement.spacedBy(MediumDp)
+    ) {
+        // 3. Items Rendering
+        items(todos, key = { it.id }) { item ->
+            TodoItemUi(
+                todoItem = item,
+                onItemClick = onItemClick,
+                onItemDelete = onItemDelete
+            )
+        }
+        // 4. Layout Adjustment
+        item { Spacer(modifier = Modifier.height(overlappingElementsHeight)) }
+    }
+}
+
+@Preview
+@Composable
+fun TodoItemUiPreview() {
+    Column(
+        modifier = Modifier.padding(MediumDp),
+        verticalArrangement = Arrangement.spacedBy(MediumDp)
+    ) {
+        TodoItemUi(todoItem = TodoItem(title = "Todo Item 1"), onItemClick = {todoItem -> todoItem.isDone.value = true })
+        TodoItemUi(todoItem = TodoItem(title = "Todo Item 2"))
+        TodoItemUi(todoItem = TodoItem(title = "Todo Item 3"))
+        TodoItemUi(todoItem = TodoItem(title = "Todo Item 4"))
+    }
+}
 
 @Preview(widthDp = 412, showBackground = true, backgroundColor = 0xFF395790)
 @Composable
