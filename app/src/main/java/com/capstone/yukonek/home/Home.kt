@@ -59,6 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.capstone.yukonek.R
+import com.capstone.yukonek.component.reminder.TodoItemUi
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.ui.theme.LargeDp
 import com.capstone.yukonek.ui.theme.MediumDp
@@ -161,6 +162,13 @@ fun MainView() {
                                     style = MaterialTheme.typography.titleMedium,
                                     color = MaterialTheme.colorScheme.primary
                                 )
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        Icons.Filled.ArrowForward,
+                                        contentDescription = "View All",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                         }
@@ -335,106 +343,6 @@ fun CardEntertainmentNews() {
         )
     }
 }
-
-
-@Composable
-fun TodoItemUi(
-    todoItem: TodoItem = TodoItem(title = "Todo Item"),
-    //  1. Lambda Function Parameters for Flexibility
-    onItemClick: (TodoItem) -> Unit = {},
-    onItemDelete: (TodoItem) -> Unit = {}
-) {
-    // 2. Adaptive Color Scheme
-    val backgroundColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
-    val textColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
-
-    // 3. Text Decoration
-    val textDecoration = if (todoItem.isDone.value) TextDecoration.LineThrough else null
-
-    // 4. Dynamic Icons
-    val iconId = if (todoItem.isDone.value) R.drawable.ic_selected_checkbox else R.drawable.ic_empty_checkbox
-    val iconColorFilter = if (todoItem.isDone.value) ColorFilter.tint(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)) else ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
-    val iconTintColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(TodoItemHeight),
-        elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
-        shape = RoundedCornerShape(size = MediumDp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(backgroundColor)
-                // 5. Clickable Modifier with Ripple Effect:
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(bounded = true)
-                ) { onItemClick(todoItem) },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(id = iconId),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(MediumDp)
-                    .size(TodoItemIconSize),
-                colorFilter = iconColorFilter
-            )
-            Text(
-                text = todoItem.title,
-                modifier = Modifier.weight(1f),
-                style = TodoItemTitleTextStyle.copy(color = textColor),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textDecoration = textDecoration
-            )
-            // 6. IconButton for Deletion
-            IconButton(
-                onClick = { onItemDelete(todoItem) },
-                modifier = Modifier.size(TodoItemActionButtonRippleRadius)
-            ) {
-                Icon(
-                    modifier = Modifier.size(TodoItemIconSize),
-                    painter = painterResource(id = R.drawable.ic_delete),
-                    contentDescription = null,
-                    tint = iconTintColor
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun TodoItemsContainer(
-    modifier: Modifier = Modifier,
-    todoItemsFlow: Flow<List<TodoItem>> = flowOf(listOf()),
-    onItemClick: (TodoItem) -> Unit = {},
-    onItemDelete: (TodoItem) -> Unit = {},
-    overlappingElementsHeight: Dp = 0.dp
-) {
-    // 1. Flow Data Collection
-    val todos = todoItemsFlow.collectAsState(initial = listOf()).value
-    // 2. LazyColumn Setup
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(MediumDp),
-        verticalArrangement = Arrangement.spacedBy(MediumDp)
-    ) {
-        // 3. Items Rendering
-        items(todos, key = { it.id }) { item ->
-            TodoItemUi(
-                todoItem = item,
-                onItemClick = onItemClick,
-                onItemDelete = onItemDelete
-            )
-        }
-        // 4. Layout Adjustment
-        item { Spacer(modifier = Modifier.height(overlappingElementsHeight)) }
-    }
-}
-
 @Preview
 @Composable
 fun TodoItemUiPreview() {

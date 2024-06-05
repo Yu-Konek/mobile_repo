@@ -11,5 +11,6 @@
     <string name="about_solution_description">Yu-Konek addresses this gap by offering an AI-driven platform specifically designed to identify and match YouTube creators in Indonesia with optimal partners for collaboration. Our solution leverages advanced machine learning algorithms to analyze compatibility based on historical data, content characteristics, and audience demographics. By improving the accuracy and relevance of these collaborative matches, Yu-Konek aims to enhance creator productivity, content diversity, and audience satisfaction.</string>
     <string name="about_mission_title">Our Mission</string>
     <string name="about_mission_description">Our mission is to foster a more inclusive and successful digital content community in Indonesia. By empowering creators with the right tools and partnerships, we strive to elevate the overall quality and impact of the Indonesian YouTube ecosystem, ensuring every creator has the opportunity to shine and grow.</string>
+    <string name="title_activity_detail_reminder">DetailReminderActivity</string>
 
 </resources>
