@@ -54,6 +54,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -476,6 +477,14 @@ fun PreviewCardEntertainmentNews() {
 @Preview
 @Composable
 fun PreviewMainView() {
+    YuKonekTheme {
+        MainView()
+    }
+}
+
+@Preview(device = Devices.TABLET)
+@Composable
+fun PreviewMainViewLandscape() {
     YuKonekTheme {
         MainView()
     }

@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.yukonek.R
+import com.capstone.yukonek.component.MyTopBar
 import com.example.compose.YuKonekTheme
 import com.example.ui.theme.AppTypography
 
@@ -68,23 +69,7 @@ fun MainView() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-
-                ),
-                title = {
-                    Text("YouTubers For You", style = MaterialTheme.typography.titleLarge)
-                },
-                navigationIcon = {
-                    IconButton(onClick = {  }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
+            MyTopBar(title = "Detail YouTubers For You")
         },
     ) { innerPadding->
         LazyColumn(modifier = Modifier.padding(innerPadding)){
