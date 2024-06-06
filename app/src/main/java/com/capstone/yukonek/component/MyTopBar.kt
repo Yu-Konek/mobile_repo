@@ -11,10 +11,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.capstone.yukonek.home.data.TodoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopBar(title:String){
+fun MyTopBar(title:String,onBackClick:() -> Unit = {}){
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -24,7 +25,7 @@ fun MyTopBar(title:String){
             Text(title, style = MaterialTheme.typography.titleLarge)
         },
         navigationIcon = {
-            IconButton(onClick = {  }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back"

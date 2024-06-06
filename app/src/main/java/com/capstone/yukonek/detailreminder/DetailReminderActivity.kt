@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.component.MyTopBar
 import com.capstone.yukonek.component.reminder.TodoInputBar
 import com.capstone.yukonek.component.reminder.TodoItemsContainer
@@ -28,15 +29,19 @@ class DetailReminderActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YuKonekTheme {
-                MainView()
+                MainViewDetailReminder()
             }
         }
     }
 }
 
 @Composable
-private fun MainView() {
-    Scaffold(modifier = Modifier.fillMaxSize(), topBar = { MyTopBar(title = "Reminders")}) { innerPadding ->
+fun MainViewDetailReminder(navController: NavHostController? = null) {
+    Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
+        MyTopBar(title = "Reminders", onBackClick = {
+            navController?.popBackStack()
+        })
+    }) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -82,6 +87,6 @@ private fun MainView() {
 @Composable
 private fun MainViewPreview() {
     YuKonekTheme {
-        MainView()
+        MainViewDetailReminder()
     }
 }

@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.MyTopBar
 import com.example.compose.YuKonekTheme
@@ -45,19 +46,20 @@ class DetailYoutuberForYou : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YuKonekTheme {
-                MainView()
+                MainViewDetailYoutuberForYou()
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainView() {
+fun MainViewDetailYoutuberForYou(navController: NavHostController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MyTopBar(title = "Detail YouTubers For You")
+            MyTopBar(title = "Detail YouTubers For You",onBackClick = {
+                navController?.popBackStack()
+            })
         },
     ) { innerPadding->
         LazyColumn(modifier = Modifier.padding(innerPadding)){
@@ -131,7 +133,7 @@ fun CardListYoutuber() {
 @Composable
 fun DetailYoutuberForYourPreview() {
     YuKonekTheme {
-        MainView()
+        MainViewDetailYoutuberForYou()
     }
 }
 
