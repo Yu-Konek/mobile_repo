@@ -4,4 +4,12 @@
     <string name="title_activity_form_user">FormUser</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_detail_youtuber_for_you">DetailYoutuberForYou</string>
+    <string name="title_activity_about">About</string>
+    <string name="about_challenge_description">In the dynamic and competitive landscape of Indonesian digital content creation, YouTube creators frequently face significant barriers in expanding their reach and fostering effective collaborations. These challenges stem from difficulties in identifying and partnering with suitable collaborators who align with their content style, audience demographics, and historical data. Existing tools fall short, lacking the precision and intelligence needed to match creators in a way that enhances their creative output and audience engagement. As a result, many creators feel isolated, struggling to achieve their full potential and hindering the vibrancy and diversity of the Indonesian YouTube ecosystem.</string>
+    <string name="about_challenge_title">The Challenge</string>
+    <string name="about_solution_title">Our Solution</string>
+    <string name="about_solution_description">Yu-Konek addresses this gap by offering an AI-driven platform specifically designed to identify and match YouTube creators in Indonesia with optimal partners for collaboration. Our solution leverages advanced machine learning algorithms to analyze compatibility based on historical data, content characteristics, and audience demographics. By improving the accuracy and relevance of these collaborative matches, Yu-Konek aims to enhance creator productivity, content diversity, and audience satisfaction.</string>
+    <string name="about_mission_title">Our Mission</string>
+    <string name="about_mission_description">Our mission is to foster a more inclusive and successful digital content community in Indonesia. By empowering creators with the right tools and partnerships, we strive to elevate the overall quality and impact of the Indonesian YouTube ecosystem, ensuring every creator has the opportunity to shine and grow.</string>
+
 </resources>
