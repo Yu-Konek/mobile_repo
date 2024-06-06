@@ -1,4 +1,4 @@
-package com.capstone.yukonek.data
+package com.capstone.yukonek.formuser.data
 
 object Category {
     val category = arrayOf(
