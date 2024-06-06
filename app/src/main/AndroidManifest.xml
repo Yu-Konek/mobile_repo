@@ -13,6 +13,11 @@
         android:theme="@style/Theme.YuKonek"
         tools:targetApi="31">
         <activity
+            android:name=".detailreminder.DetailReminderActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_reminder"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
             android:name=".about.About"
             android:exported="false"
             android:label="@string/title_activity_about"
