@@ -12,5 +12,6 @@
     <string name="about_mission_title">Our Mission</string>
     <string name="about_mission_description">Our mission is to foster a more inclusive and successful digital content community in Indonesia. By empowering creators with the right tools and partnerships, we strive to elevate the overall quality and impact of the Indonesian YouTube ecosystem, ensuring every creator has the opportunity to shine and grow.</string>
     <string name="title_activity_detail_reminder">DetailReminderActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
