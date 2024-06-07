@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.MyTopBar
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.example.ui.theme.AppTypography
 
 class DetailYoutuberForYou : ComponentActivity() {

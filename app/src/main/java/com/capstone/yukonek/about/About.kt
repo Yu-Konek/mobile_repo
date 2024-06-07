@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.MyTopBar
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class About : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

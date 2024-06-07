@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capstone.yukonek.formuser.data.Category
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.example.ui.theme.AppTypography
 
 class FormUser : ComponentActivity() {
