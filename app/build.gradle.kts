@@ -94,5 +94,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.logging.interceptor)
-
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }
