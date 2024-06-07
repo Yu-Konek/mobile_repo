@@ -9,19 +9,19 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.capstone.yukonek.R
 
 @Composable
-fun MyEmailTextField(
+fun MyTextTextField(
+    text: String,
+    onTextChange: (String) -> Unit,
     label: String,
-    email: String,
-    onEmailChange: (String) -> Unit,
     textStyle: TextStyle
 ) {
     MyCustomTextField(
-        modifier = Modifier.fillMaxWidth(),
-        value = email,
-        onValueChange = onEmailChange,
+        value = text,
         label = label,
         textStyle = textStyle,
-        leadingIcon = painterResource(id = R.drawable.outline_attach_email_24),
+        modifier = Modifier.fillMaxWidth(),
+        onValueChange = onTextChange,
+        leadingIcon = painterResource(id = R.drawable.ic_person),
         visualTransformation = VisualTransformation.None
     )
 }
