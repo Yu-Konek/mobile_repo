@@ -52,7 +52,7 @@
             android:name=".formuser.FormUser"
             android:exported="true"
             android:label="@string/title_activity_form_user"
-            android:theme="@style/Theme.YuKonek"></activity>
+            android:theme="@style/Theme.YuKonek" />
     </application>
 
 </manifest>

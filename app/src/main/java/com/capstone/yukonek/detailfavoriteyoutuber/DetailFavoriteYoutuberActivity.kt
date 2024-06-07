@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.capstone.yukonek.component.MyTopBar
+import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.card.CardListYoutuberRow
 import com.example.compose.YuKonekTheme
 
