@@ -18,5 +18,6 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
 
 </resources>
