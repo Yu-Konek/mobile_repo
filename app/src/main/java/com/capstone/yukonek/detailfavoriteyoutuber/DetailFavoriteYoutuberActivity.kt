@@ -1,4 +1,4 @@
-package com.capstone.yukonek.detailyoutuberforyou
+package com.capstone.yukonek.detailfavoriteyoutuber
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,24 +18,24 @@ import com.capstone.yukonek.component.MyTopBar
 import com.capstone.yukonek.component.card.CardListYoutuberRow
 import com.example.compose.YuKonekTheme
 
-class DetailYoutuberForYou : ComponentActivity() {
+class DetailFavoriteYoutuberActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             YuKonekTheme {
-                MainViewDetailYoutuberForYou()
+                MainViewDetailFavoriteYoutuber()
             }
         }
     }
 }
 
 @Composable
-fun MainViewDetailYoutuberForYou(navController: NavHostController? = null) {
+fun MainViewDetailFavoriteYoutuber(navController: NavHostController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MyTopBar(title = "YouTubers For You",onBackClick = {
+            MyTopBar(title = "Favorite YouTubers",onBackClick = {
                 navController?.popBackStack()
             })
         },
@@ -51,18 +51,10 @@ fun MainViewDetailYoutuberForYou(navController: NavHostController? = null) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
-fun DetailYoutuberForYourPreview() {
+fun DetailFavoriteYotuberPreview() {
     YuKonekTheme {
-        MainViewDetailYoutuberForYou()
+        MainViewDetailFavoriteYoutuber()
     }
-}
-
-@Preview()
-@Composable
-fun PreviewCardListYoutuber() {
-    CardListYoutuberRow()
 }

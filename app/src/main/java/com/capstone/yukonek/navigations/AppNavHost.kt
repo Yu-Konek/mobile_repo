@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.capstone.yukonek.detailfavoriteyoutuber.MainViewDetailFavoriteYoutuber
 import com.capstone.yukonek.detailreminder.MainViewDetailReminder
 import com.capstone.yukonek.detailyoutuberforyou.DetailYoutuberForYou
 import com.capstone.yukonek.detailyoutuberforyou.MainViewDetailYoutuberForYou
@@ -35,6 +36,10 @@ fun AppNavHost(
 
         composable(NavigationItem.DetailReminder.route){
             MainViewDetailReminder(navController)
+        }
+
+        composable(NavigationItem.DetailFavoriteYoutuber.route){
+            MainViewDetailFavoriteYoutuber(navController)
         }
     }
 }
