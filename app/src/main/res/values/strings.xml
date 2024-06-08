@@ -20,4 +20,19 @@
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="welcome_text">Enter the email and password you used to register</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="don_t_have_account">Don\'t have account ?</string>
+    <string name="welcome_text_sign_up">Sign Up</string>
+    <string name="desc_forget_pas">Enter the email that matches the registered account, we will send a lnk along with instructions for resetting the password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirmation_password">Confirmation Password</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
