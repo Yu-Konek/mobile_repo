@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import com.capstone.yukonek.component.textfield.MyEmailTextField
@@ -46,91 +47,96 @@ class SigninActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainViewSignIn() {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.surface
-    ) { innerPadding ->
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var hidePassword by remember { mutableStateOf(true) }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item {
-                Text(
-                    text = "Welcome Back",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = "Enter the email and password you used to register",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.inversePrimary,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                MyEmailTextField(
-                    email = email,
-                    onEmailChange = { email = it },
-                    label = "Email",
-                    textStyle = TextStyle(
-                        fontSize = 8.sp,
-                        fontStyle = FontStyle.Normal
-                    )
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                MyPasswordTextField(
-                    password = password,
-                    onPasswordChange = { password = it },
-                    onTrailingIconClick = { hidePassword = !hidePassword },
-                    hidePassword = hidePassword,
-                    label = "Password",
-                    textStyle = TextStyle(
-                        fontSize = 8.sp,
-                        fontStyle = FontStyle.Normal
-                    )
-                )
-                Text(
-                    text = "Forget Password ?",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.inversePrimary,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                MyButton(
-                    text = "Sign In",
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Row {
+    YuKonekTheme {
+
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.surface
+        ) { innerPadding ->
+            var email by remember { mutableStateOf("") }
+            var password by remember { mutableStateOf("") }
+            var hidePassword by remember { mutableStateOf(true) }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                item {
                     Text(
-                        text = "Don't have account ?",
+                        text = "Welcome Back",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Enter the email and password you used to register",
                         style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        textAlign = TextAlign.Center
+                        color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.alpha(0.5F)
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    MyEmailTextField(
+                        email = email,
+                        onEmailChange = { email = it },
+                        label = "Email",
+                        textStyle = TextStyle(
+                            fontSize = 8.sp,
+                            fontStyle = FontStyle.Normal,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    MyPasswordTextField(
+                        password = password,
+                        onPasswordChange = { password = it },
+                        onTrailingIconClick = { hidePassword = !hidePassword },
+                        hidePassword = hidePassword,
+                        label = "Password",
+                        textStyle = TextStyle(
+                            fontSize = 8.sp,
+                            fontStyle = FontStyle.Normal
+                        )
                     )
                     Text(
-                        text = "Sign Up",
+                        text = "Forget Password ?",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.inversePrimary,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    MyButton(
+                        text = "Sign In",
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Row {
+                        Text(
+                            text = "Don't have account ?",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = "Sign Up",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             }
         }
     }
 }
-
