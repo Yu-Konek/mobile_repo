@@ -13,6 +13,11 @@
         android:theme="@style/Theme.YuKonek"
         tools:targetApi="31">
         <activity
+            android:name=".MainScreen"
+            android:exported="false"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
             android:name=".changepassword.ChangePasswordActivity"
             android:exported="false"
             android:label="@string/title_activity_change_password"
@@ -72,8 +77,7 @@
             android:name=".formuser.FormUser"
             android:exported="true"
             android:label="@string/title_activity_form_user"
-            android:theme="@style/Theme.YuKonek">
-        </activity>
+            android:theme="@style/Theme.YuKonek"></activity>
     </application>
 
 </manifest>
