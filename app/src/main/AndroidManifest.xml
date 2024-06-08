@@ -13,21 +13,6 @@
         android:theme="@style/Theme.YuKonek"
         tools:targetApi="31">
         <activity
-            android:name=".forgetpassword.ForgetPasswordActivity"
-            android:exported="false"
-            android:label="@string/title_activity_forget_password"
-            android:theme="@style/Theme.YuKonek" />
-        <activity
-            android:name=".forgotpassword.ForgotPasswordActivity"
-            android:exported="false"
-            android:label="@string/title_activity_forgot_password"
-            android:theme="@style/Theme.YuKonek" />
-        <activity
-            android:name=".signup.SignupActivity"
-            android:exported="false"
-            android:label="@string/title_activity_signup"
-            android:theme="@style/Theme.YuKonek" />
-        <activity
             android:name=".MainScreen"
             android:exported="false"
             android:label="@string/title_activity_main_screen"
@@ -41,6 +26,11 @@
             android:name=".forgetpassword.ForgetPasswordActivity"
             android:exported="false"
             android:label="@string/title_activity_forget_password"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
+            android:name=".signup.SignupActivity"
+            android:exported="false"
+            android:label="@string/title_activity_signup"
             android:theme="@style/Theme.YuKonek" />
         <activity
             android:name=".signin.SigninActivity"
@@ -87,7 +77,7 @@
             android:name=".formuser.FormUser"
             android:exported="true"
             android:label="@string/title_activity_form_user"
-            android:theme="@style/Theme.YuKonek" />
+            android:theme="@style/Theme.YuKonek"></activity>
     </application>
 
 </manifest>
