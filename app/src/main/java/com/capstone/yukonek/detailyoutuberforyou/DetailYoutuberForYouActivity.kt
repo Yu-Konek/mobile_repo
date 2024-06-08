@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.card.CardListYoutuberRow
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class DetailYoutuberForYou : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

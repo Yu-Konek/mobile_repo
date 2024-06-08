@@ -6,9 +6,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
@@ -17,22 +19,26 @@ fun MyCustomTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
+    textStyle: TextStyle,
     // icons param
     leadingIcon: Painter? = null,
     onTrailingIconClick: () -> Unit = {},
     trailingIcon: Painter? = null,
-    visualTransformation: VisualTransformation
+    visualTransformation: VisualTransformation,
+    label: String
 ) {
     OutlinedTextField(
         modifier = modifier,
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedTextColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.secondary
         ),
         visualTransformation = visualTransformation,
         value = value,
+        textStyle = textStyle,
+        label = { Text(label) },
         onValueChange = onValueChange,
         // icons
         leadingIcon = leadingIcon?.let {
