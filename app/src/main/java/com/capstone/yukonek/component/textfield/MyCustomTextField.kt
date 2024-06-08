@@ -30,10 +30,10 @@ fun MyCustomTextField(
     OutlinedTextField(
         modifier = modifier,
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedTextColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.inversePrimary,
-            unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
+            unfocusedLeadingIconColor = MaterialTheme.colorScheme.secondary
         ),
         visualTransformation = visualTransformation,
         value = value,

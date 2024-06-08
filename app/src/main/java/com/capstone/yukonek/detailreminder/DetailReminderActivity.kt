@@ -18,7 +18,7 @@ import com.capstone.yukonek.component.reminder.TodoInputBar
 import com.capstone.yukonek.component.reminder.TodoItemsContainer
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.ui.theme.OverlappingHeight
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 import kotlinx.coroutines.flow.flowOf
 
 class DetailReminderActivity : ComponentActivity() {
