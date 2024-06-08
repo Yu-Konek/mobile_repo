@@ -13,6 +13,11 @@
         android:theme="@style/Theme.YuKonek"
         tools:targetApi="31">
         <activity
+            android:name=".forgetpassword.ForgetPasswordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_forget_password"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
             android:name=".signup.SignupActivity"
             android:exported="false"
             android:label="@string/title_activity_signup"

@@ -41,7 +41,7 @@ import com.capstone.yukonek.component.reminder.TodoItemUi
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.MediumDp
-import com.example.compose.YuKonekTheme
+import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
