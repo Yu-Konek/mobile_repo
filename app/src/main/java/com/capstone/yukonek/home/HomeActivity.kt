@@ -1,5 +1,6 @@
 package com.capstone.yukonek.home
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,12 +22,21 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +44,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.capstone.yukonek.bottomnavigation.BottomNavigationBar
+import com.capstone.yukonek.bottomnavigation.BottomNavigationItem
 import com.capstone.yukonek.component.card.CardDisplayName
 import com.capstone.yukonek.component.card.CardEntertainmentNews
 import com.capstone.yukonek.component.card.CardListYoutuberColumn
@@ -55,12 +67,14 @@ class HomeActivity : ComponentActivity() {
     }
 }
 
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainViewHome(navController: NavHostController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.primary
-    ) { innerPadding ->
+        containerColor = MaterialTheme.colorScheme.primary,
+        ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -78,7 +92,6 @@ fun MainViewHome(navController: NavHostController? = null) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding)
                         .clip(shape = RoundedCornerShape(20.dp, 20.dp, 0.dp, 0.dp))
                         .background(MaterialTheme.colorScheme.surface),
                 ) {
@@ -208,6 +221,7 @@ fun MainViewHome(navController: NavHostController? = null) {
     }
 
 }
+
 @Preview
 @Composable
 fun TodoItemUiPreview() {
@@ -249,7 +263,7 @@ fun PreviewCardEntertainmentNews() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview()
 @Composable
 fun PreviewMainView() {
     YuKonekTheme {

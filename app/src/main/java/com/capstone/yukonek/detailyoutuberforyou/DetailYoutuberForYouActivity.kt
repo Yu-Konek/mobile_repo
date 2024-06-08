@@ -7,6 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -14,8 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.capstone.yukonek.bottomnavigation.BottomNavigationBar
+import com.capstone.yukonek.bottomnavigation.BottomNavigationItem
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.card.CardListYoutuberRow
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class DetailYoutuberForYou : ComponentActivity() {
@@ -32,6 +40,7 @@ class DetailYoutuberForYou : ComponentActivity() {
 
 @Composable
 fun MainViewDetailYoutuberForYou(navController: NavHostController? = null) {
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
