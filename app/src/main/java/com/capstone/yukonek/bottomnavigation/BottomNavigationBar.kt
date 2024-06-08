@@ -78,6 +78,7 @@ fun RowScope.AddItem(
                 launchSingleTop = true
                 // Restore state when reselecting a previously selected item
                 restoreState = true
+
             }
         },
         label = { Text(screen.title, style = MaterialTheme.typography.labelLarge) },

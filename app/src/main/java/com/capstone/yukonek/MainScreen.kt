@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.capstone.yukonek.bottomnavigation.BottomNavigationBar
+import com.capstone.yukonek.bottomnavigation.BottomNavigationItem
 import com.capstone.yukonek.navigations.AppNavHost
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
@@ -22,9 +24,13 @@ import com.capstone.yukonek.ui.theme.YuKonekTheme
 @Composable
 fun MainScreen(){
     val navController = rememberNavController()
+    val listOfVisibleNavigationBar = listOf(BottomNavigationItem.Home.route, BottomNavigationItem.Profile.route)
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     Surface {
         Scaffold(bottomBar = {
-            BottomNavigationBar(navController = navController)
+            if(currentRoute in listOfVisibleNavigationBar){
+                BottomNavigationBar(navController = navController)
+            }
         }) {  _ ->
             AppNavHost(navController = navController)
         }

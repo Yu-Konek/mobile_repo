@@ -20,5 +20,4 @@
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_main_screen">MainScreen</string>
-
 </resources>
