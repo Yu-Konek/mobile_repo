@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
 import com.capstone.yukonek.component.textfield.MyTextTextField
@@ -57,7 +59,9 @@ fun MainViewSignUp() {
             var email by remember { mutableStateOf("") }
             var text by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
+            var confirmPassword by remember { mutableStateOf("") }
             var hidePassword by remember { mutableStateOf(true) }
+            var hidePasswordConfirm by remember { mutableStateOf(true) }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -68,13 +72,13 @@ fun MainViewSignUp() {
             ) {
                 item {
                     Text(
-                        text = "Sign Up",
+                        text = stringResource(R.string.sign_up),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Create Your Account ",
+                        text = stringResource(R.string.create_your_account),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
@@ -85,9 +89,9 @@ fun MainViewSignUp() {
                     MyTextTextField(
                         text = text,
                         onTextChange = { text = it },
-                        label = "Username",
+                        label = stringResource(R.string.username),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )
@@ -95,9 +99,9 @@ fun MainViewSignUp() {
                     MyEmailTextField(
                         email = email,
                         onEmailChange = { email = it },
-                        label = "Email",
+                        label = stringResource(R.string.email),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )
@@ -107,21 +111,21 @@ fun MainViewSignUp() {
                         onPasswordChange = { password = it },
                         onTrailingIconClick = { hidePassword = !hidePassword },
                         hidePassword = hidePassword,
-                        label = "Password",
+                        label = stringResource(R.string.password),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     MyPasswordTextField(
-                        password = password,
-                        onPasswordChange = { password = it },
-                        onTrailingIconClick = { hidePassword = !hidePassword },
-                        hidePassword = hidePassword,
-                        label = "Confirmation Password",
+                        password = confirmPassword,
+                        onPasswordChange = { confirmPassword = it },
+                        onTrailingIconClick = { hidePasswordConfirm = !hidePasswordConfirm },
+                        hidePassword = hidePasswordConfirm,
+                        label = stringResource(R.string.confirmation_password),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )

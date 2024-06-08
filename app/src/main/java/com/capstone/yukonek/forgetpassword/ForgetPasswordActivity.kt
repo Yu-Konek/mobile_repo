@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -68,19 +69,18 @@ fun MainViewForgetPassword() {
                         painter = painterResource(id = R.drawable.forgotpassword),
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxSize().height(150.dp)
+                            .fillMaxSize()
+                            .height(150.dp)
                     )
                     Spacer(modifier = Modifier.height(50.dp))
                     Text(
-                        text = "Forgot Password",
+                        text = stringResource(R.string.forgot_password),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Enter the email that matches the registered account,\n" +
-                                "we will send a lnk along with instructions for resetting \n" +
-                                "the password",
+                        text = stringResource(R.string.desc_forget_pas),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
