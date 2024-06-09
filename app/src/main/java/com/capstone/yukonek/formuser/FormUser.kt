@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.formuser.data.Category
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.example.ui.theme.AppTypography
@@ -39,13 +40,13 @@ class FormUser : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             YuKonekTheme {
-                MainView()
+                MainViewFormUser()
             }
         }
     }
 }
 @Composable
-fun MainView(){
+fun MainViewFormUser(navController:NavHostController? = null){
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             TitleInstruction(
@@ -155,6 +156,6 @@ fun CustomOutlinedTextFieldNumberOnly(label: String, modifier: Modifier = Modifi
 @Composable
 fun GreetingPreview() {
     YuKonekTheme {
-        MainView()
+        MainViewFormUser()
     }
 }

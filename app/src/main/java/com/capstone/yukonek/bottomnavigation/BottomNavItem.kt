@@ -27,6 +27,6 @@ sealed class BottomNavigationItem(
         title = "Profile",
         selectedIcon = Icons.Filled.AccountCircle,
         unselectedIcon = Icons.Outlined.AccountCircle,
-        route = Screen.DETAIL_YOUTUBER_FOR_YOU.name
+        route = Screen.PROFILE.name
     )
 }

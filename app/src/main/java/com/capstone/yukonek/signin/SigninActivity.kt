@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
@@ -51,9 +52,8 @@ class SigninActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewSignIn() {
+fun MainViewSignIn(navController: NavHostController? = null) {
     YuKonekTheme {
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = MaterialTheme.colorScheme.surface

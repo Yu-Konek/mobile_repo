@@ -19,7 +19,7 @@ enum class Screen {
 sealed class NavigationItem(val route: String) {
     data object SignIn:NavigationItem(Screen.SIGN_IN.name)
     data object SignUp:NavigationItem(Screen.SIGN_UP.name)
-    data object ForgotPassword:NavigationItem(Screen.FORGOT_PASSWORD.name)
+    data object ForgetPassword:NavigationItem(Screen.FORGOT_PASSWORD.name)
     data object FormUser : NavigationItem(Screen.FORM_USER.name)
     data object Home : NavigationItem(Screen.HOME.name)
     data object DetailReminder : NavigationItem(Screen.DETAIL_REMINDER.name)

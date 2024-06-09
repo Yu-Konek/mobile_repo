@@ -49,6 +49,7 @@ import androidx.compose.ui.semantics.Role.Companion.Switch
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.capstone.yukonek.profile.CardProfile as CardProfile
@@ -67,7 +68,7 @@ class ProfileActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewProfile() {
+fun MainViewProfile(navController:NavHostController? = null) {
     YuKonekTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             LazyColumn(
