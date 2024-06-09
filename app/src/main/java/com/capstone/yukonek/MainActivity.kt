@@ -7,6 +7,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.capstone.yukonek.bottomnavigation.BottomNavigationBar
 import com.capstone.yukonek.navigations.AppNavHost
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
                 android.graphics.Color.TRANSPARENT
             )
         )
+        installSplashScreen()
         setContent {
             YuKonekTheme {
                 MainScreen()

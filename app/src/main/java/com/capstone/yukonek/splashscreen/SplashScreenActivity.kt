@@ -19,11 +19,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capstone.yukonek.R
 import com.capstone.yukonek.ui.theme.YuKonekTheme
+import com.capstone.yukonek.ui.theme.primaryLight
 
 class SplashScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +45,7 @@ fun MainViewSplashScreen() {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            containerColor =  MaterialTheme.colorScheme.primary
+            containerColor =  Color(0XFF284880)
         ) { innerPadding ->
             LazyColumn(
                 modifier = Modifier

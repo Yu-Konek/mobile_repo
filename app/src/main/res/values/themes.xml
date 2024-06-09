@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.YuKonek" parent="Base.Theme.YuKonek" />
+
+    <style name="Theme.YuKonek.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#284880</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>
+    </style>
 </resources>
