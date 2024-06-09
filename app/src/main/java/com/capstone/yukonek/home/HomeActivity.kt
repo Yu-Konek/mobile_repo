@@ -60,155 +60,153 @@ class HomeActivity : ComponentActivity() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainViewHome(navController: NavHostController? = null) {
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = MaterialTheme.colorScheme.primary,
+fun MainViewHome(navController: NavHostController? = null,) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.primary,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
         ) {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
+
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-
-                ) {
-                    Column(modifier = Modifier.padding(top = 24.dp)) {
-                        CardDisplayName()
-                    }
-
-                    // Content area (Placeholder for main content)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(shape = RoundedCornerShape(20.dp, 20.dp, 0.dp, 0.dp))
-                            .background(MaterialTheme.colorScheme.surface),
-                    ) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp, vertical = 24.dp)
-                        ) {
-                            item {
-                                //                        Youtuber Recommendations
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        "YouTubers For You",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                    IconButton(onClick = {
-                                        navController?.navigate(Screen.DETAIL_YOUTUBER_FOR_YOU.name)
-                                    }) {
-                                        Icon(
-                                            Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "View All",
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                }
-                                LazyRow(modifier = Modifier.fillMaxWidth()) {
-                                    items(5) {
-                                        CardListYoutuberColumn()
-                                        Spacer(modifier = Modifier.width(12.dp))
-                                    }
-                                }
-
-                                Spacer(modifier = Modifier.height(24.dp))
-
-                            }
-                            item {
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        "Reminders",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                    IconButton(onClick = {
-                                        navController?.navigate(Screen.DETAIL_REMINDER.name)
-                                    }) {
-                                        Icon(
-                                            Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "View All",
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-                            items(5) {
-                                TodoItemUi(
-                                    todoItem = TodoItem(title = "Todo Item ${it + 1}"),
-                                    onItemClick = { todoItem ->
-                                        todoItem.isDone.value = !todoItem.isDone.value
-                                    })
-                                Spacer(modifier = Modifier.height(4.dp))
-                            }
-                            item {
-                                //                        Favorite Youtubers
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        "Your FavTubers",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                    IconButton(onClick = {
-                                        navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
-                                    }) {
-                                        Icon(
-                                            Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "View All",
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                }
-                                LazyRow(modifier = Modifier.fillMaxWidth()) {
-                                    items(5) {
-                                        CardListYoutuberColumn()
-                                        Spacer(modifier = Modifier.width(12.dp))
-                                    }
-                                }
-
-                                Spacer(modifier = Modifier.height(24.dp))
-                            }
-                            item {
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        "Entertainment News",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-                            // News
-                            items(10) {
-                                CardEntertainmentNews()
-                                Spacer(modifier = Modifier.height(24.dp))
-                            }
-
-                        }
-                    }
+                Column(modifier = Modifier.padding(top = 24.dp)) {
+                    CardDisplayName()
                 }
 
+                // Content area (Placeholder for main content)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(shape = RoundedCornerShape(20.dp, 20.dp, 0.dp, 0.dp))
+                        .background(MaterialTheme.colorScheme.surface),
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 24.dp)
+                    ) {
+                        item {
+                            //                        Youtuber Recommendations
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    "YouTubers For You",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                IconButton(onClick = {
+                                    navController?.navigate(Screen.DETAIL_YOUTUBER_FOR_YOU.name)
+                                }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.ArrowForward,
+                                        contentDescription = "View All",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                                items(5) {
+                                    CardListYoutuberColumn()
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                        }
+                        item {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    "Reminders",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                IconButton(onClick = {
+                                    navController?.navigate(Screen.DETAIL_REMINDER.name)
+                                }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.ArrowForward,
+                                        contentDescription = "View All",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                        items(5) {
+                            TodoItemUi(
+                                todoItem = TodoItem(title = "Todo Item ${it + 1}"),
+                                onItemClick = { todoItem ->
+                                    todoItem.isDone.value = !todoItem.isDone.value
+                                })
+                            Spacer(modifier = Modifier.height(4.dp))
+                        }
+                        item {
+                            //                        Favorite Youtubers
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    "Your FavTubers",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                IconButton(onClick = {
+                                    navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
+                                }) {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.ArrowForward,
+                                        contentDescription = "View All",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                                items(5) {
+                                    CardListYoutuberColumn()
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(24.dp))
+                        }
+                        item {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    "Entertainment News",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                        // News
+                        items(10) {
+                            CardEntertainmentNews()
+                            Spacer(modifier = Modifier.height(24.dp))
+                        }
+
+                    }
+                }
             }
+
         }
     }
 

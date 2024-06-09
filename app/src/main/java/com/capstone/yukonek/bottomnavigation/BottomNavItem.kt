@@ -16,14 +16,14 @@ sealed class BottomNavigationItem(
     val unselectedIcon: ImageVector,
     val route: String
 ) {
-    object Home : BottomNavigationItem(
+    data object Home : BottomNavigationItem(
         title = "Home",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         route = Screen.HOME.name
     )
 
-    object Profile : BottomNavigationItem(
+    data object Profile : BottomNavigationItem(
         title = "Profile",
         selectedIcon = Icons.Filled.AccountCircle,
         unselectedIcon = Icons.Outlined.AccountCircle,
