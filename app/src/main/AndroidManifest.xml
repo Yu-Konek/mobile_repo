@@ -13,6 +13,16 @@
         android:theme="@style/Theme.YuKonek.MySplash"
         tools:targetApi="31">
         <activity
+            android:name=".detailyoutuber.DetailYoutuberActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_youtuber"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
+            android:name=".editprofile.EditProfileActivity"
+            android:exported="false"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/Theme.YuKonek" />
+        <activity
             android:name=".changepassword.ChangePasswordActivity"
             android:exported="false"
             android:label="@string/title_activity_change_password"
@@ -72,7 +82,11 @@
             android:name=".formuser.FormUser"
             android:exported="true"
             android:label="@string/title_activity_form_user"
+<<<<<<< HEAD
             android:theme="@style/Theme.YuKonek"/>
+=======
+            android:theme="@style/Theme.YuKonek" />
+>>>>>>> 8bc407b (slicing edit profile page)
     </application>
 
 </manifest>
