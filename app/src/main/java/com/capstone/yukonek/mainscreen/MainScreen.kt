@@ -2,11 +2,14 @@ package com.capstone.yukonek.mainscreen
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,8 +36,10 @@ fun MainScreen(){
                 if(currentRoute in listOfVisibleNavigationBar){
                     BottomNavigationBar(navController = navController)
                 }
-            }) {  _ ->
-                AppNavHost(navController = navController)
+            }) {  innerPadding ->
+                Box(modifier = Modifier.padding(innerPadding)){
+                    AppNavHost(navController = navController)
+                }
             }
         }
 
