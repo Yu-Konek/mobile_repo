@@ -60,11 +60,11 @@ class HomeActivity : ComponentActivity() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainViewHome(navController: NavHostController? = null) {
+fun MainViewHome(navController: NavHostController? = null,) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.primary,
-        ) {
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()

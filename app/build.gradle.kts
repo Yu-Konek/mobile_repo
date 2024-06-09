@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.text.google.fonts)
+    testImplementation(libs.junit.v412)
     val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -101,4 +102,12 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.core.splashscreen)
+    // Coroutine test
+    testImplementation(libs.kotlinx.coroutines.test)
+    // Mockk for Kotlin
+    testImplementation(libs.mockk)
+    // ViewModel testing
+    testImplementation(libs.androidx.core.testing)
+
 }

@@ -24,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.ui.theme.YuKonekTheme
@@ -34,14 +36,14 @@ class About : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             YuKonekTheme {
-                MainView()
+                MainViewAbout()
             }
         }
     }
 }
 
 @Composable
-fun MainView() {
+fun MainViewAbout(navController: NavHostController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -113,7 +115,7 @@ fun MainView() {
 @Composable
 fun AboutPreview() {
     YuKonekTheme {
-        MainView()
+        MainViewAbout()
     }
 }
 
@@ -121,7 +123,7 @@ fun AboutPreview() {
 @Composable
 fun AboutPreviewLandscape() {
     YuKonekTheme {
-        MainView()
+        MainViewAbout()
     }
 }
 
@@ -129,6 +131,6 @@ fun AboutPreviewLandscape() {
 @Composable
 fun AboutPreviewDark() {
     YuKonekTheme {
-        MainView()
+        MainViewAbout()
     }
 }

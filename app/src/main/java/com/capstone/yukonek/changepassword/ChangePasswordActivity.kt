@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
 import com.capstone.yukonek.ui.theme.YuKonekTheme
@@ -45,7 +46,7 @@ class ChangePasswordActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewChangePassword() {
+fun MainViewChangePassword(navController:NavHostController? = null) {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),

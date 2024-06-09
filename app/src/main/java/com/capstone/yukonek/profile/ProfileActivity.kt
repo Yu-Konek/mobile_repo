@@ -1,9 +1,11 @@
 package com.capstone.yukonek.profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +34,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,12 +47,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Switch
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
+import com.capstone.yukonek.mainscreen.MainViewModelFactory
+import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.capstone.yukonek.profile.CardProfile as CardProfile
 
@@ -67,92 +75,92 @@ class ProfileActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewProfile() {
-    YuKonekTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(all = 12.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                item {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
+fun MainViewProfile(navController:NavHostController? = null) {
+    val viewModel:MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
+    val themeSettings by viewModel.getThemeSettings().collectAsState(initial = false)
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(all = 12.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            item {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
 
-                        ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.thumbnail),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .height(83.dp)
-                                .width(83.dp)
+                    ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.thumbnail),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .height(83.dp)
+                            .width(83.dp)
+                    )
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Zaghy Zalayetha",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold
                         )
-                        Column(
-                            modifier = Modifier.padding(16.dp)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(percent = 50))
+                                .background(MaterialTheme.colorScheme.primary)
+                                .padding(4.dp)
+                                .width(100.dp),
+                            Alignment.Center
                         ) {
                             Text(
-                                text = "Zaghy Zalayetha",
-                                style = MaterialTheme.typography.titleLarge,
+                                text = "Gaming",
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(percent = 50))
-                                    .background(MaterialTheme.colorScheme.primary)
-                                    .padding(4.dp)
-                                    .width(100.dp),
-                                Alignment.Center
-                            ) {
-                                Text(
-                                    text = "Gaming",
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
                         }
-                        Icon(
-                            painter = painterResource(id = R.drawable.school_science_graduation_cap),
-                            contentDescription = null
-                        )
                     }
-                    Spacer(modifier = Modifier.height(24.dp))
-                    HorizontalDivider(
-                        thickness = 2.dp,
-                        modifier = Modifier.padding(2.dp)
+                    Icon(
+                        painter = painterResource(id = R.drawable.school_science_graduation_cap),
+                        contentDescription = null
                     )
-                    CardProfile(
-                        painterResource(
-                            id = R.drawable.ic_pencil
-                        ),
-                        text = "Edit Profile"
-                    )
-                    CardProfile(
-                        painterResource(
-                            id = R.drawable.ic_favourite
-                        ),
-                        text = "Favourite"
-                    )
-                    CardProfile(
-                        painterResource(
-                            id = R.drawable.ic_lock
-                        ),
-                        text = "Change Password"
-                    )
-                    CardProfile(
-                        painterResource(
-                            id = R.drawable.ic_about
-                        ),
-                        text = "About"
-                    )
-                    SwitchWithIconExample()
-                    Logout()
                 }
+                Spacer(modifier = Modifier.height(24.dp))
+                HorizontalDivider(
+                    thickness = 2.dp,
+                    modifier = Modifier.padding(2.dp)
+                )
+                CardProfile(
+                    painterResource(
+                        id = R.drawable.ic_pencil
+                    ),
+                    text = "Edit Profile"
+                )
+                CardProfile(
+                    painterResource(
+                        id = R.drawable.ic_favourite
+                    ),
+                    text = "Favourite"
+                )
+                CardProfile(
+                    painterResource(
+                        id = R.drawable.ic_lock
+                    ),
+                    text = "Change Password"
+                )
+                CardProfile(
+                    painterResource(
+                        id = R.drawable.ic_about
+                    ),
+                    text = "About"
+                )
+                SwitchWithIconExample(viewmodel = viewModel, themeSettings = themeSettings)
+                Logout()
             }
         }
     }
@@ -218,9 +226,7 @@ fun CardProfile(
 
 @Preview
 @Composable
-fun SwitchWithIconExample() {
-    var checked by remember { mutableStateOf(true) }
-
+fun SwitchWithIconExample(viewmodel: MainViewmodel = viewModel(), themeSettings: Boolean = false) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +234,7 @@ fun SwitchWithIconExample() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
     ) {
-        if (checked) {
+        if (themeSettings) {
             Image(
                 modifier = Modifier.width(50.dp),
                 painter = painterResource(id = R.drawable.ic_dark),
@@ -243,9 +249,14 @@ fun SwitchWithIconExample() {
         }
         Spacer(modifier = Modifier.width(10.dp))
         Switch(
-            checked = checked,
-            onCheckedChange = {
-                checked = it
+            checked = themeSettings,
+            onCheckedChange = {isChecked->
+                if(isChecked){
+                    viewmodel.setThemeSettings(true)
+                }else{
+                    viewmodel.setThemeSettings(false)
+                }
+
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
@@ -253,7 +264,7 @@ fun SwitchWithIconExample() {
                 uncheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
                 uncheckedTrackColor = Color(0xFFFFC100),
             ),
-            thumbContent = if (checked) {
+            thumbContent = if (themeSettings) {
                 {
                     Icon(
                         imageVector = Icons.Filled.Check,
