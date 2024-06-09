@@ -75,7 +75,7 @@ fun MainViewDetailYoutuber() {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { MyTopBar(title = "Edit Profile") },
+            topBar = { MyTopBar(title = "Detail Youtuber") },
             containerColor = MaterialTheme.colorScheme.surface
         ) { innerPadding ->
             LazyColumn(
