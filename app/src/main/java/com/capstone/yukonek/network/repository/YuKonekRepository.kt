@@ -1,13 +1,11 @@
 package com.capstone.yukonek.network.repository
 
-import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.asLiveData
 import com.capstone.yukonek.local.datastore.SettingPreferencesDataStore
-import com.capstone.yukonek.network.retrofit.ApiService
+import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
 import kotlinx.coroutines.flow.Flow
 
 class YuKonekRepository private constructor(
-    private val apiService: ApiService,
+    private val apiService: PrivateApiService,
     private val pref: SettingPreferencesDataStore
 ) {
      fun getTheme(): Flow<Boolean> {
@@ -20,7 +18,7 @@ class YuKonekRepository private constructor(
         @Volatile
         private var instance: YuKonekRepository? = null
         fun getInstance(
-            apiService: ApiService,
+            apiService: PrivateApiService,
             pref: SettingPreferencesDataStore,
         ): YuKonekRepository = instance ?: synchronized(this) {
             instance ?: YuKonekRepository(apiService, pref).also {
