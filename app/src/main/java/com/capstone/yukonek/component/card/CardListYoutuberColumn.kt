@@ -20,11 +20,12 @@ import com.capstone.yukonek.R
 import com.example.ui.theme.AppTypography
 
 @Composable
-fun CardListYoutuberColumn() {
+fun CardListYoutuberColumn(onClick: () -> Unit = {}) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
+        onClick = onClick
     ) {
         Column {
             Image(

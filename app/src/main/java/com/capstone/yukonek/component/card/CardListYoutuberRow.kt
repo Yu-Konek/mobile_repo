@@ -28,13 +28,13 @@ import com.capstone.yukonek.R
 import com.example.ui.theme.AppTypography
 
 @Composable
-fun CardListYoutuberRow() {
+fun CardListYoutuberRow(onClick: () -> Unit = {}) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
         shape = RoundedCornerShape(8.dp),
-
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
