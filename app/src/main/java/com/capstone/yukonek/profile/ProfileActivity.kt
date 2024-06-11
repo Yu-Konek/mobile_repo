@@ -97,7 +97,6 @@ fun MainViewProfile(navController: NavHostController? = null) {
                         .padding(innerPadding)
                         .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
                     ) {
                     Image(
                         painter = painterResource(id = R.drawable.thumbnail),
