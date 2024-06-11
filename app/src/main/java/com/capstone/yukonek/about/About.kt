@@ -47,7 +47,10 @@ fun MainViewAbout(navController: NavHostController? = null) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            MyTopBar(title = "About")
+            MyTopBar(title = "About",
+                onBackClick = {
+                    navController?.popBackStack()
+                })
         }
     ) { innerPadding ->
         LazyColumn(
