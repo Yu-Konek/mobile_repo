@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +39,7 @@ import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class SigninActivity : ComponentActivity() {
@@ -92,7 +96,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         onEmailChange = { email = it },
                         label = stringResource(R.string.email),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -105,39 +109,46 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         hidePassword = hidePassword,
                         label = stringResource(R.string.password),
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )
-                    Text(
-                        text = stringResource(R.string.forget_password),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.fillMaxWidth()
+                    Spacer(modifier = Modifier.height(12.dp))
+                    ClickableText(
+                        text = AnnotatedString(stringResource(id = R.string.forgot_password)),
+                        style = TextStyle(
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            textAlign = TextAlign.End
+                        ),
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { navController?.navigate(Screen.FORGOT_PASSWORD.name) }
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     MyButton(
                         text = "Sign In",
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { navController?.navigate(Screen.HOME.name) }
                     )
+                    Spacer(modifier = Modifier.height(12.dp))
                     Row {
                         Text(
                             text = stringResource(R.string.don_t_have_account),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontSize = 14.sp,
+                            style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.inversePrimary,
                             textAlign = TextAlign.Center
                         )
-                        Text(
-                            text = stringResource(R.string.welcome_text_sign_up),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.inversePrimary,
-                            textAlign = TextAlign.Center
+                        Spacer(modifier = Modifier.width(4.dp))
+                        ClickableText(
+                            text = AnnotatedString(stringResource(id = R.string.welcome_text_sign_up)),
+                            style = TextStyle(
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                textAlign = TextAlign.Center
+                            ),
+                            onClick = { navController?.navigate(Screen.SIGN_UP.name) }
                         )
                     }
                 }

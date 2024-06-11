@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class ForgetPasswordActivity : ComponentActivity() {
@@ -93,12 +94,15 @@ fun MainViewForgetPassword(navController: NavHostController? = null) {
                         onEmailChange = { email = it },
                         label = "Email",
                         textStyle = TextStyle(
-                            fontSize = 8.sp,
+                            fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
                         )
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(text = "Create Account", modifier = Modifier.fillMaxWidth())
+                    MyButton(
+                        text = "Send",
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { navController?.navigate(Screen.SIGN_IN.name) })
                 }
             }
         }

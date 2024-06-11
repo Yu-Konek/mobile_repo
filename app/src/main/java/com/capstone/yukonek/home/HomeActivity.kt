@@ -109,7 +109,7 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
                         LazyRow(modifier = Modifier.fillMaxWidth()) {
                             items(5) {
-                                CardListYoutuberColumn()
+                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
                                 Spacer(modifier = Modifier.width(12.dp))
                             }
                         }
@@ -172,7 +172,7 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
                         LazyRow(modifier = Modifier.fillMaxWidth()) {
                             items(5) {
-                                CardListYoutuberColumn()
+                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
                                 Spacer(modifier = Modifier.width(12.dp))
                             }
                         }

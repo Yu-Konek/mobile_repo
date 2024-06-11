@@ -35,6 +35,7 @@ import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
 import com.capstone.yukonek.component.textfield.MyTextTextField
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class SignupActivity : ComponentActivity() {
@@ -51,7 +52,7 @@ class SignupActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewSignUp(navController:NavHostController? = null) {
+fun MainViewSignUp(navController: NavHostController? = null) {
     YuKonekTheme {
 
         Scaffold(
@@ -131,7 +132,14 @@ fun MainViewSignUp(navController:NavHostController? = null) {
                         )
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(text = "Create Account", modifier = Modifier.fillMaxWidth())
+                    MyButton(
+                        text = "Create Account",
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            navController?.navigate(
+                                Screen.SIGN_IN.name
+                            )
+                        })
                 }
             }
         }
