@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit.v412)
     val composeBom = platform("androidx.compose:compose-bom:2024.05.00")
     implementation(composeBom)
@@ -110,5 +111,6 @@ dependencies {
     testImplementation(libs.mockk)
     // ViewModel testing
     testImplementation(libs.androidx.core.testing)
+    implementation(libs.coil.compose)
 
 }
