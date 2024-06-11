@@ -25,8 +25,8 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="welcome_text">Enter the email and password you used to register</string>
     <string name="forget_password">Forget Password ?</string>
-    <string name="don_t_have_account">Don\'t have account ?</string>
-    <string name="welcome_text_sign_up">Sign Up</string>
+    <string name="don_t_have_account">Don\'t have account ? </string>
+    <string name="welcome_text_sign_up"> Sign Up</string>
     <string name="desc_forget_pas">Enter the email that matches the registered account, we will send a lnk along with instructions for resetting the password</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="sign_up">Sign Up</string>
@@ -37,4 +37,7 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_detail_youtuber">DetailYoutuberActivity</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="about_onboarding">Yu-Konek is an AI-driven platform that addresses this issue by using advanced algorithms to accurately match YouTube creators with ideal partners. This improves collaboration, content quality, and audience engagement, fostering a more inclusive and successful digital content community in Indonesia.</string>
+    <string name="what_for_onboarding">Yu-Konek is an AI-driven platform designed to help YouTube creators in Indonesia overcome barriers to collaboration. By using advanced machine learning algorithms, it accurately matches creators based on content style, audience demographics, and historical data. This enhances creative output, audience engagement, and fosters a more inclusive and successful digital content community. Yu-Konek empowers creators with the right tools and partnerships, elevating the quality and impact of the Indonesian YouTube ecosystem.</string>
 </resources>

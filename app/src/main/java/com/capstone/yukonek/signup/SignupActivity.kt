@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -35,6 +36,7 @@ import com.capstone.yukonek.R
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyPasswordTextField
 import com.capstone.yukonek.component.textfield.MyTextTextField
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class SignupActivity : ComponentActivity() {
@@ -51,7 +53,7 @@ class SignupActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewSignUp(navController:NavHostController? = null) {
+fun MainViewSignUp(navController: NavHostController? = null) {
     YuKonekTheme {
 
         Scaffold(
@@ -76,6 +78,7 @@ fun MainViewSignUp(navController:NavHostController? = null) {
                         text = stringResource(R.string.sign_up),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
@@ -83,8 +86,9 @@ fun MainViewSignUp(navController:NavHostController? = null) {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.alpha(0.5F)
+
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     MyTextTextField(
@@ -131,7 +135,14 @@ fun MainViewSignUp(navController:NavHostController? = null) {
                         )
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(text = "Create Account", modifier = Modifier.fillMaxWidth())
+                    MyButton(
+                        text = "Create Account",
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            navController?.navigate(
+                                Screen.SIGN_IN.name
+                            )
+                        })
                 }
             }
         }

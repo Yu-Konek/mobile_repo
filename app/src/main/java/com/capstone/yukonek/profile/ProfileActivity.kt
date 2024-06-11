@@ -51,6 +51,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Switch
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -58,6 +60,7 @@ import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
 import com.capstone.yukonek.mainscreen.MainViewmodel
+import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 import com.capstone.yukonek.profile.CardProfile as CardProfile
 
@@ -73,24 +76,28 @@ class ProfileActivity : ComponentActivity() {
     }
 }
 
-@Preview
+@Preview(device = Devices.TABLET)
 @Composable
-fun MainViewProfile(navController:NavHostController? = null) {
-    val viewModel:MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
+fun MainViewProfile(navController: NavHostController? = null) {
+    val viewModel: MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
     val themeSettings by viewModel.getThemeSettings().collectAsState(initial = false)
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(all = 12.dp),
+                .padding(vertical = 24.dp, horizontal = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
                 Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-
+                    horizontalArrangement = Arrangement.Start
                     ) {
                     Image(
                         painter = painterResource(id = R.drawable.thumbnail),
@@ -104,9 +111,10 @@ fun MainViewProfile(navController:NavHostController? = null) {
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Zaghy Zalayetha",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
+                            text = "Mohammad Zaghy Zalayetha",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Box(
@@ -125,10 +133,6 @@ fun MainViewProfile(navController:NavHostController? = null) {
                             )
                         }
                     }
-                    Icon(
-                        painter = painterResource(id = R.drawable.school_science_graduation_cap),
-                        contentDescription = null
-                    )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
                 HorizontalDivider(
@@ -139,25 +143,29 @@ fun MainViewProfile(navController:NavHostController? = null) {
                     painterResource(
                         id = R.drawable.ic_pencil
                     ),
-                    text = "Edit Profile"
+                    text = "Edit Profile",
+                    onClick = { navController?.navigate(Screen.EDIT_PROFILE.name) }
                 )
                 CardProfile(
                     painterResource(
                         id = R.drawable.ic_favourite
                     ),
-                    text = "Favourite"
+                    text = "Favourite",
+                    onClick = { navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name) }
                 )
                 CardProfile(
                     painterResource(
                         id = R.drawable.ic_lock
                     ),
-                    text = "Change Password"
+                    text = "Change Password",
+                    onClick = { navController?.navigate(Screen.CHANGE_PASSWORD.name) }
                 )
                 CardProfile(
                     painterResource(
                         id = R.drawable.ic_about
                     ),
-                    text = "About"
+                    text = "About",
+                    onClick = { navController?.navigate(Screen.ABOUT.name) }
                 )
                 SwitchWithIconExample(viewmodel = viewModel, themeSettings = themeSettings)
                 Logout()
@@ -170,13 +178,14 @@ fun MainViewProfile(navController:NavHostController? = null) {
 fun CardProfile(
     painter: Painter,
     text: String,
+    onClick: () -> Unit = {}
 ) {
 
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
-        onClick = {},
+        onClick = onClick,
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -208,7 +217,7 @@ fun CardProfile(
                 Text(
                     text = text,
                     color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -250,10 +259,10 @@ fun SwitchWithIconExample(viewmodel: MainViewmodel = viewModel(), themeSettings:
         Spacer(modifier = Modifier.width(10.dp))
         Switch(
             checked = themeSettings,
-            onCheckedChange = {isChecked->
-                if(isChecked){
+            onCheckedChange = { isChecked ->
+                if (isChecked) {
                     viewmodel.setThemeSettings(true)
-                }else{
+                } else {
                     viewmodel.setThemeSettings(false)
                 }
 
@@ -295,7 +304,7 @@ fun Logout() {
         )
         Text(
             text = "Logout", color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
     }

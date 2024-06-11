@@ -25,8 +25,8 @@ fun MyPasswordTextField(
     textStyle: TextStyle,
 ) {
     val trailingIcon =
-        if (hidePassword) AppIcons.EyeCrossed
-        else AppIcons.Eye
+        if (hidePassword) AppIcons.Eye
+        else AppIcons.EyeCrossed
 
     val visualTransformation =
         if (hidePassword) PasswordVisualTransformation()
