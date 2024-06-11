@@ -14,7 +14,8 @@ enum class Screen {
     PROFILE,
     EDIT_PROFILE,
     CHANGE_PASSWORD,
-    ABOUT
+    ABOUT,
+    DETAIL_NEWS
 }
 
 sealed class NavigationItem(val route: String) {
@@ -32,6 +33,7 @@ sealed class NavigationItem(val route: String) {
     data object EditProfile : NavigationItem(Screen.EDIT_PROFILE.name)
     data object ChangePassword : NavigationItem(Screen.CHANGE_PASSWORD.name)
     data object About : NavigationItem(Screen.ABOUT.name)
+    data object DetailNews:NavigationItem(Screen.DETAIL_NEWS.name)
 
 
 }
