@@ -52,6 +52,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Switch
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -75,7 +76,7 @@ class ProfileActivity : ComponentActivity() {
     }
 }
 
-@Preview
+@Preview(device = Devices.TABLET)
 @Composable
 fun MainViewProfile(navController: NavHostController? = null) {
     val viewModel: MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
@@ -96,6 +97,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                         .padding(innerPadding)
                         .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                     ) {
                     Image(
                         painter = painterResource(id = R.drawable.thumbnail),
