@@ -46,11 +46,15 @@ class ChangePasswordActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewChangePassword(navController:NavHostController? = null) {
+fun MainViewChangePassword(navController: NavHostController? = null) {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { MyTopBar(title = "Change Password") },
+            topBar = {
+                MyTopBar(title = "Change Password", onBackClick = {
+                    navController?.popBackStack()
+                })
+            },
             containerColor = MaterialTheme.colorScheme.surface
         ) { innerPadding ->
             var oldPassword by remember { mutableStateOf("") }
@@ -133,7 +137,7 @@ fun MainViewChangePassword(navController:NavHostController? = null) {
                         )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    MyButton(text = "Create Account", modifier = Modifier.fillMaxWidth())
+                    MyButton(text = "Change Password", modifier = Modifier.fillMaxWidth())
                 }
             }
         }
