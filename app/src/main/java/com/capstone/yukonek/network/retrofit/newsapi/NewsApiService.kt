@@ -1,15 +1,11 @@
 package com.capstone.yukonek.network.retrofit.newsapi
 
-import com.capstone.yukonek.home.data.MResponseNewsApi
+import com.capstone.yukonek.home.data.MResponseNews
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface NewsApiService {
 
-    @GET("top-headlines")
+    @GET("cnn/hiburan")
     suspend fun getTopEntertainmentHeadlines(
-        @Query("country") country: String,
-        @Query("category") category: String,
-        @Query("apiKey") apiKey: String
-    ): MResponseNewsApi
+    ): MResponseNews
 }

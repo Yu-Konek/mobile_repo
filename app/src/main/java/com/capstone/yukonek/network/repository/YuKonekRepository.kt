@@ -3,15 +3,14 @@ package com.capstone.yukonek.network.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
-import com.capstone.yukonek.BuildConfig
-import com.capstone.yukonek.home.data.MResponseNewsApi
+import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.local.datastore.SettingPreferencesDataStore
-import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
-import kotlinx.coroutines.flow.Flow
 import com.capstone.yukonek.network.Result
 import com.capstone.yukonek.network.error.ErrorResponse
+import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
 import com.capstone.yukonek.network.retrofit.newsapi.NewsApiService
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 
 class YuKonekRepository private constructor(
@@ -28,15 +27,11 @@ class YuKonekRepository private constructor(
         pref.saveThemeSetting(isDarkMode)
     }
 
-    fun getTopHeadlineEntertainmentNews(): LiveData<Result<MResponseNewsApi>> =
+    fun getTopHeadlineEntertainmentNews(): LiveData<Result<MResponseNews>> =
         liveData {
             emit(Result.Loading)
             try {
-                val response = newsApiService.getTopEntertainmentHeadlines(
-                    country = "id",
-                    category = "entertainment",
-                    apiKey = BuildConfig.API_NEWS_KEY
-                )
+                val response = newsApiService.getTopEntertainmentHeadlines()
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val response = e.response()?.errorBody()?.string()
@@ -46,7 +41,7 @@ class YuKonekRepository private constructor(
             }
         }
 
-    fun getArguments(arg: String):Flow<String> = checkNotNull(savedStateHandle[arg])
+    fun getArguments(arg: String): Flow<String> = checkNotNull(savedStateHandle[arg])
 
 
     companion object {

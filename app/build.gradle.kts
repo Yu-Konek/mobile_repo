@@ -21,7 +21,7 @@ android {
         }
 
         buildConfigField("String", "BASE_URL", "\"https://belumtau/\"")
-        buildConfigField("String", "BASE_URL_NEWS_API", "\"https://newsapi.org/v2/\"")
+        buildConfigField("String", "BASE_URL_NEWS_API", "\"https://api-berita-indonesia.vercel.app\"")
         buildConfigField("String","API_NEWS_KEY","\"7eab736a4816461f8bc6304cf9d4c293\"")
     }
     buildTypes {

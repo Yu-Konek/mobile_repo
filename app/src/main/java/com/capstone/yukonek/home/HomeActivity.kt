@@ -1,7 +1,6 @@
 package com.capstone.yukonek.home
 
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +27,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,7 +44,7 @@ import com.capstone.yukonek.component.card.CardDisplayName
 import com.capstone.yukonek.component.card.CardEntertainmentNews
 import com.capstone.yukonek.component.card.CardListYoutuberColumn
 import com.capstone.yukonek.component.reminder.TodoItemUi
-import com.capstone.yukonek.home.data.MResponseNewsApi
+import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
 import com.capstone.yukonek.mainscreen.MainViewmodel
@@ -216,23 +214,34 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
 
                         is Result.Success -> {
-                            (entertainmentNews as Result.Success<MResponseNewsApi>).data.articles?.let { articles ->
-                                items(articles.take(5).size) { index ->
-                                    CardEntertainmentNews(
-                                        title = articles[index]?.title ?: "-",
-                                        description = articles[index]?.description ?: "-",
-                                        image = articles[index]?.urlToImage ?: "",
-                                        onClick = {
-                                            Log.e("HomeActivity", "MainViewHome: ${articles[index]?.url}")
-                                            navController?.navigate("${Screen.DETAIL_NEWS.name}/${URLEncoder.encode(articles[index]?.url, StandardCharsets.UTF_8.toString())}")
-                                        })
-                                    Spacer(modifier = Modifier.height(24.dp))
+                            (entertainmentNews as Result.Success<MResponseNews>).data.data?.posts.let { articles ->
+                                articles?.take(5)?.size?.let {
+                                    items(it) { index ->
+                                        CardEntertainmentNews(
+                                            title = articles[index]?.title ?: "-",
+                                            description = articles[index]?.description ?: "-",
+                                            image = articles[index]?.thumbnail ?: "",
+                                            onClick = {
+                                                Log.e("HomeActivity", "MainViewHome: ${articles[index]?.link}")
+                                                navController?.navigate("${Screen.DETAIL_NEWS.name}/${URLEncoder.encode(articles[index]?.link, StandardCharsets.UTF_8.toString())}")
+                                            })
+                                        Spacer(modifier = Modifier.height(24.dp))
+                                    }
                                 }
                             }
                         }
 
                         is Result.Error -> {
-
+                            item{
+                                CardEntertainmentNews(
+                                    title = "-",
+                                    description =  "-",
+                                    image =  "",
+                                    onClick = {
+                                        navController?.navigate("${Screen.DETAIL_NEWS.name}/${URLEncoder.encode("", StandardCharsets.UTF_8.toString())}")
+                                    })
+                                Spacer(modifier = Modifier.height(24.dp))
+                            }
                         }
 
                         else -> {
