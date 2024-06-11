@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.textfield.MyEmailTextField
@@ -58,11 +59,15 @@ class EditProfileActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewEditProfile() {
+fun MainViewEditProfile(navController: NavHostController? = null) {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { MyTopBar(title = "Edit Profile") },
+            topBar = {
+                MyTopBar(title = "Edit Profile", onBackClick = {
+                    navController?.popBackStack()
+                })
+            },
             containerColor = MaterialTheme.colorScheme.surface
         ) { innerPadding ->
             var name by remember { mutableStateOf("") }
