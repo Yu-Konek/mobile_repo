@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -119,8 +120,9 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         style = TextStyle(
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.inversePrimary,
-                            textAlign = TextAlign.End
+                            color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.End,
+                            textDecoration = TextDecoration.Underline
                         ),
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { navController?.navigate(Screen.FORGOT_PASSWORD.name) }
@@ -136,7 +138,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         Text(
                             text = stringResource(R.string.don_t_have_account),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.inversePrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.width(4.dp))
@@ -145,8 +147,9 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                             style = TextStyle(
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.inversePrimary,
-                                textAlign = TextAlign.Center
+                                color = MaterialTheme.colorScheme.primary,
+                                textAlign = TextAlign.Center,
+                                        textDecoration = TextDecoration.Underline
                             ),
                             onClick = { navController?.navigate(Screen.SIGN_UP.name) }
                         )
