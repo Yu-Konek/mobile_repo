@@ -11,21 +11,23 @@ import com.capstone.yukonek.about.MainViewAbout
 import com.capstone.yukonek.changepassword.MainViewChangePassword
 import com.capstone.yukonek.detailfavoriteyoutuber.MainViewDetailFavoriteYoutuber
 import com.capstone.yukonek.detailreminder.MainViewDetailReminder
+import com.capstone.yukonek.detailyoutuber.MainViewDetailYoutuber
 import com.capstone.yukonek.detailyoutuberforyou.DetailYoutuberForYou
 import com.capstone.yukonek.detailyoutuberforyou.MainViewDetailYoutuberForYou
+import com.capstone.yukonek.editprofile.MainViewEditProfile
 import com.capstone.yukonek.forgetpassword.MainViewForgetPassword
 import com.capstone.yukonek.formuser.MainViewFormUser
-import com.capstone.yukonek.home.HomeActivity
 import com.capstone.yukonek.home.MainViewHome
 import com.capstone.yukonek.profile.MainViewProfile
 import com.capstone.yukonek.signin.MainViewSignIn
 import com.capstone.yukonek.signup.MainViewSignUp
+import com.capstone.yukonek.welcome.MainViewWelcome
 
 @Composable
 fun AppNavHost(
   modifier: Modifier = Modifier,
   navController: NavHostController,
-  startDestination: String = NavigationItem.Home.route
+  startDestination: String = NavigationItem.Welcome.route
 
 ){
     NavHost(
@@ -34,6 +36,9 @@ fun AppNavHost(
         startDestination = startDestination
     ){
 
+        composable(NavigationItem.Welcome.route) {
+            MainViewWelcome(navController)
+        }
         composable(NavigationItem.SignIn.route){
             MainViewSignIn(navController)
         }
@@ -52,20 +57,20 @@ fun AppNavHost(
         composable(NavigationItem.Profile.route){
             MainViewProfile(navController)
         }
-
+        composable(NavigationItem.DetailYoutuber.route){
+            MainViewDetailYoutuber(navController)
+        }
         composable(NavigationItem.DetailYoutuberForYou.route){
             MainViewDetailYoutuberForYou(navController)
         }
-
         composable(NavigationItem.DetailReminder.route){
             MainViewDetailReminder(navController)
         }
-
         composable(NavigationItem.DetailFavoriteYoutuber.route){
             MainViewDetailFavoriteYoutuber(navController)
         }
         composable(NavigationItem.EditProfile.route){
-//            TODO : Belum ada halaman edit profile
+            MainViewEditProfile(navController)
         }
         composable(NavigationItem.ChangePassword.route){
             MainViewChangePassword(navController)
