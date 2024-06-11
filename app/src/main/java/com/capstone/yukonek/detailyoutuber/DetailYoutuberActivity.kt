@@ -51,6 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.textfield.MyEmailTextField
@@ -71,11 +72,15 @@ class DetailYoutuberActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewDetailYoutuber() {
+fun MainViewDetailYoutuber(navController: NavHostController? = null) {
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { MyTopBar(title = "Detail Youtuber") },
+            topBar = {
+                MyTopBar(title = "Detail Youtuber", onBackClick = {
+                    navController?.popBackStack()
+                })
+            },
             containerColor = MaterialTheme.colorScheme.surface
         ) { innerPadding ->
             LazyColumn(
