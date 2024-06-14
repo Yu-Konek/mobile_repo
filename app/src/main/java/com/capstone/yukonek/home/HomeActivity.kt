@@ -166,8 +166,8 @@ fun MainViewHome(navController: NavHostController? = null) {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                     item {
-                        TodoItemUi(TodoItem(title = todoItems. toString()))
-                        Log.d("ini apa", todoItems.toString())
+//                        TodoItemUi(TodoItem(title = todoItems. toString()))
+//                        Log.d("ini apa", todoItems.toString())
 //                        TodoItemsContainer(
 //                            todoItemsFlow = flowOf(todoItems.value),
 //                            onItemClick = { item ->
