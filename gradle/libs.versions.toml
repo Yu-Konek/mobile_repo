@@ -27,6 +27,7 @@ mockk = "1.10.6"
 navigationCompose = "2.7.7"
 retrofit = "2.11.0"
 roomCompiler = "2.6.1"
+roomKtx = "2.5.1"
 roomRuntime = "2.6.1"
 uiTextGoogleFonts = "1.6.7"
 runtimeLivedata = "1.6.7"
@@ -41,6 +42,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-material3 = { module = "androidx.compose.material3:material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
