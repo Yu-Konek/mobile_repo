@@ -43,17 +43,17 @@ fun TodoItemUi(
     onItemDelete: (TodoItem) -> Unit = {}
 ) {
     // 2. Adaptive Color Scheme
-    val backgroundColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
-    val textColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
+    val backgroundColor = if (todoItem.isDone) MaterialTheme.colorScheme.primary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary
+    val textColor = if (todoItem.isDone) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
 
     // 3. Text Decoration
-    val textDecoration = if (todoItem.isDone.value) TextDecoration.LineThrough else null
+    val textDecoration = if (todoItem.isDone) TextDecoration.LineThrough else null
 
     // 4. Dynamic Icons
-    val iconId = if (todoItem.isDone.value) R.drawable.ic_selected_checkbox else R.drawable.ic_empty_checkbox
-    val iconColorFilter = if (todoItem.isDone.value) ColorFilter.tint(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)) else ColorFilter.tint(
+    val iconId = if (todoItem.isDone) R.drawable.ic_selected_checkbox else R.drawable.ic_empty_checkbox
+    val iconColorFilter = if (todoItem.isDone) ColorFilter.tint(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)) else ColorFilter.tint(
         MaterialTheme.colorScheme.onPrimary)
-    val iconTintColor = if (todoItem.isDone.value) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
+    val iconTintColor = if (todoItem.isDone) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onPrimary
 
     Card(
         modifier = Modifier
