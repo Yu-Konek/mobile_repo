@@ -29,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -44,6 +45,9 @@ import com.capstone.yukonek.component.card.CardDisplayName
 import com.capstone.yukonek.component.card.CardEntertainmentNews
 import com.capstone.yukonek.component.card.CardListYoutuberColumn
 import com.capstone.yukonek.component.reminder.TodoItemUi
+import com.capstone.yukonek.component.reminder.TodoItemsContainer
+import com.capstone.yukonek.detailreminder.DetailReminderViewModel
+import com.capstone.yukonek.detailreminder.DetailReminderViewModelFactory
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
@@ -51,7 +55,9 @@ import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.network.Result
 import com.capstone.yukonek.ui.theme.MediumDp
+import com.capstone.yukonek.ui.theme.OverlappingHeight
 import com.capstone.yukonek.ui.theme.YuKonekTheme
+import kotlinx.coroutines.flow.flowOf
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -70,8 +76,15 @@ class HomeActivity : ComponentActivity() {
 
 @Composable
 fun MainViewHome(navController: NavHostController? = null) {
+
     val viewModel: MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
     val entertainmentNews by viewModel.getTopHeadlineEntertainement().observeAsState()
+    val reminderViewModel: DetailReminderViewModel = viewModel(
+        factory = DetailReminderViewModelFactory.getInstance(
+            LocalContext.current
+        )
+    )
+    val todoItems = reminderViewModel.getAllTodoItems()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -152,12 +165,19 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                     }
-                    items(5) {
-                        TodoItemUi(
-                            todoItem = TodoItem(title = "Todo Item ${it + 1}"),
-                            onItemClick = { todoItem ->
-                                todoItem.isDone.value = !todoItem.isDone.value
-                            })
+                    item {
+//                        TodoItemUi(TodoItem(title = todoItems. toString()))
+//                        Log.d("ini apa", todoItems.toString())
+//                        TodoItemsContainer(
+//                            todoItemsFlow = flowOf(todoItems.value),
+//                            onItemClick = { item ->
+//                                reminderViewModel.updateTodoItems(item.copy(isDone = !item.isDone))
+//                            },
+//                            onItemDelete = { item ->
+//                                reminderViewModel.deleteTodoItems(item)
+//                            },
+//                            overlappingElementsHeight = OverlappingHeight
+//                        )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
                     item {
@@ -222,8 +242,18 @@ fun MainViewHome(navController: NavHostController? = null) {
                                             description = articles[index]?.description ?: "-",
                                             image = articles[index]?.thumbnail ?: "",
                                             onClick = {
-                                                Log.e("HomeActivity", "MainViewHome: ${articles[index]?.link}")
-                                                navController?.navigate("${Screen.DETAIL_NEWS.name}/${URLEncoder.encode(articles[index]?.link, StandardCharsets.UTF_8.toString())}")
+                                                Log.e(
+                                                    "HomeActivity",
+                                                    "MainViewHome: ${articles[index]?.link}"
+                                                )
+                                                navController?.navigate(
+                                                    "${Screen.DETAIL_NEWS.name}/${
+                                                        URLEncoder.encode(
+                                                            articles[index]?.link,
+                                                            StandardCharsets.UTF_8.toString()
+                                                        )
+                                                    }"
+                                                )
                                             })
                                         Spacer(modifier = Modifier.height(24.dp))
                                     }
@@ -232,13 +262,20 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
 
                         is Result.Error -> {
-                            item{
+                            item {
                                 CardEntertainmentNews(
                                     title = "-",
-                                    description =  "-",
-                                    image =  "",
+                                    description = "-",
+                                    image = "",
                                     onClick = {
-                                        navController?.navigate("${Screen.DETAIL_NEWS.name}/${URLEncoder.encode("", StandardCharsets.UTF_8.toString())}")
+                                        navController?.navigate(
+                                            "${Screen.DETAIL_NEWS.name}/${
+                                                URLEncoder.encode(
+                                                    "",
+                                                    StandardCharsets.UTF_8.toString()
+                                                )
+                                            }"
+                                        )
                                     })
                                 Spacer(modifier = Modifier.height(24.dp))
                             }
@@ -266,8 +303,9 @@ fun TodoItemUiPreview() {
         verticalArrangement = Arrangement.spacedBy(MediumDp)
     ) {
         TodoItemUi(
-            todoItem = TodoItem(title = "Todo Item 1"),
-            onItemClick = { todoItem -> todoItem.isDone.value = true })
+            todoItem = TodoItem(
+                title = "Todo Item 1"),
+            onItemClick = { todoItem -> todoItem.isDone = true })
         TodoItemUi(todoItem = TodoItem(title = "Todo Item 2"))
         TodoItemUi(todoItem = TodoItem(title = "Todo Item 3"))
         TodoItemUi(todoItem = TodoItem(title = "Todo Item 4"))

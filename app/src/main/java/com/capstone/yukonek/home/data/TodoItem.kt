@@ -2,10 +2,13 @@ package com.capstone.yukonek.home.data
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity(tableName = "todo_items")
 data class TodoItem(
-    val id: UUID = UUID.randomUUID(),
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    var isDone: MutableState<Boolean> = mutableStateOf(false)
+    var isDone: Boolean = false
 )

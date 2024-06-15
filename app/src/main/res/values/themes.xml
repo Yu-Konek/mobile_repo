@@ -11,9 +11,10 @@
 
     <style name="Theme.YuKonek.MySplash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#284880</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo2</item>
         <item name="postSplashScreenTheme">@style/Theme.YuKonek</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/logo</item>
     </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.capstone.yukonek.detailreminder
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -9,9 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.reminder.TodoInputBar
@@ -34,7 +38,17 @@ class DetailReminderActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainViewDetailReminder(navController: NavHostController? = null) {
+fun MainViewDetailReminder(
+    navController: NavHostController? = null
+) {
+    val detailReminderViewModel: DetailReminderViewModel = viewModel(
+        factory = DetailReminderViewModelFactory.getInstance(
+            LocalContext.current
+        )
+    )
+    val todoItems =
+        detailReminderViewModel.getAllTodoItems().collectAsState(initial = emptyList())
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         MyTopBar(title = "Reminders", onBackClick = {
             navController?.popBackStack()
@@ -46,42 +60,27 @@ fun MainViewDetailReminder(navController: NavHostController? = null) {
                 .padding(innerPadding)
         ) {
             TodoItemsContainer(
-                // 1. Mock Data for Todo Items
-                todoItemsFlow = flowOf(
-                    listOf(
-                        TodoItem(title = "Todo Item 1"),
-                        TodoItem(title = "Todo Item 2"),
-                        TodoItem(title = "Todo Item 3"),
-                        TodoItem(title = "Todo Item 4"),
-                        TodoItem(title = "Todo Item 5"),
-                        TodoItem(title = "Todo Item 6"),
-                        TodoItem(title = "Todo Item 7"),
-                        TodoItem(title = "Todo Item 8"),
-                        TodoItem(title = "Todo Item 9"),
-                        TodoItem(title = "Todo Item 10"),
-                        TodoItem(title = "Todo Item 11"),
-                        TodoItem(title = "Todo Item 12"),
-                        TodoItem(title = "Todo Item 13"),
-                        TodoItem(title = "Todo Item 14"),
-                        TodoItem(title = "Todo Item 15")
-                    )
-                ),
+                todoItemsFlow = flowOf(todoItems.value),
                 onItemClick = { item ->
-                    item.isDone.value = !item.isDone.value
+                    detailReminderViewModel.updateTodoItems(item.copy(isDone = !item.isDone))
                 },
-                onItemDelete = {},
-                // 2. Space Adjustment for Overlapping UI Elements
+                onItemDelete = { item ->
+                    detailReminderViewModel.deleteTodoItems(item)
+                },
                 overlappingElementsHeight = OverlappingHeight
             )
             TodoInputBar(
                 modifier = Modifier.align(Alignment.BottomStart),
-                onAddButtonClick = {}
+                onAddButtonClick = { title ->
+                    detailReminderViewModel.insertTodoItems(TodoItem(title = title))
+                    Log.d("Reminder", title)
+                }
             )
         }
     }
 }
 
-@Preview()
+@Preview(showBackground = true)
 @Composable
 private fun MainViewPreview() {
     YuKonekTheme {
