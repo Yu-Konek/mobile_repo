@@ -142,29 +142,29 @@ fun MainViewHome(navController: NavHostController? = null) {
                         Spacer(modifier = Modifier.height(24.dp))
 
                     }
-                    item {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                "Reminders",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            IconButton(onClick = {
-                                navController?.navigate(Screen.DETAIL_REMINDER.name)
-                            }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "View All",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
+//                    item {
+//                        Row(
+//                            horizontalArrangement = Arrangement.SpaceBetween,
+//                            verticalAlignment = Alignment.CenterVertically,
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(
+//                                "Reminders",
+//                                style = MaterialTheme.typography.titleMedium,
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
+//                            IconButton(onClick = {
+//                                navController?.navigate(Screen.DETAIL_REMINDER.name)
+//                            }) {
+//                                Icon(
+//                                    Icons.AutoMirrored.Filled.ArrowForward,
+//                                    contentDescription = "View All",
+//                                    tint = MaterialTheme.colorScheme.primary
+//                                )
+//                            }
+//                        }
+//                        Spacer(modifier = Modifier.height(8.dp))
+//                    }
                     item {
 //                        TodoItemUi(TodoItem(title = todoItems. toString()))
 //                        Log.d("ini apa", todoItems.toString())
@@ -180,37 +180,37 @@ fun MainViewHome(navController: NavHostController? = null) {
 //                        )
                         Spacer(modifier = Modifier.height(4.dp))
                     }
-                    item {
-                        //                        Favorite Youtubers
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                "Your FavTubers",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            IconButton(onClick = {
-                                navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
-                            }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "View All",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                        LazyRow(modifier = Modifier.fillMaxWidth()) {
-                            items(5) {
-                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
-                                Spacer(modifier = Modifier.width(12.dp))
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(24.dp))
-                    }
+//                    item {
+//                        //                        Favorite Youtubers
+//                        Row(
+//                            horizontalArrangement = Arrangement.SpaceBetween,
+//                            verticalAlignment = Alignment.CenterVertically,
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(
+//                                "Your FavTubers",
+//                                style = MaterialTheme.typography.titleMedium,
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
+//                            IconButton(onClick = {
+//                                navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
+//                            }) {
+//                                Icon(
+//                                    Icons.AutoMirrored.Filled.ArrowForward,
+//                                    contentDescription = "View All",
+//                                    tint = MaterialTheme.colorScheme.primary
+//                                )
+//                            }
+//                        }
+//                        LazyRow(modifier = Modifier.fillMaxWidth()) {
+//                            items(5) {
+//                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
+//                                Spacer(modifier = Modifier.width(12.dp))
+//                            }
+//                        }
+//
+//                        Spacer(modifier = Modifier.height(24.dp))
+//                    }
                     item {
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,

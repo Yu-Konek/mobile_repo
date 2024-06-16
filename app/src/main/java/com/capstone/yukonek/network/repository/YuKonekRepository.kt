@@ -11,6 +11,7 @@ import com.capstone.yukonek.network.Result
 import com.capstone.yukonek.network.error.ErrorResponse
 import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
 import com.capstone.yukonek.network.retrofit.newsapi.NewsApiService
+import com.capstone.yukonek.network.retrofit.youtubeapi.YoutubeApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -20,6 +21,7 @@ import retrofit2.HttpException
 class YuKonekRepository private constructor(
     private val apiService: PrivateApiService,
     private val newsApiService: NewsApiService,
+    private val youtubeApiService: YoutubeApiService,
     private val pref: SettingPreferencesDataStore,
     private val savedStateHandle: SavedStateHandle,
     private val database: YuKonekDatabase
@@ -71,6 +73,7 @@ class YuKonekRepository private constructor(
         fun getInstance(
             apiService: PrivateApiService,
             newsApiService: NewsApiService,
+            youtubeApiService: YoutubeApiService,
             pref: SettingPreferencesDataStore,
             savedStateHandle: SavedStateHandle,
             database: YuKonekDatabase
@@ -78,6 +81,7 @@ class YuKonekRepository private constructor(
             instance ?: YuKonekRepository(
                 apiService,
                 newsApiService,
+                youtubeApiService,
                 pref,
                 savedStateHandle,
                 database

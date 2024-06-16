@@ -87,7 +87,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(vertical = 24.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
@@ -146,20 +146,20 @@ fun MainViewProfile(navController: NavHostController? = null) {
                     text = "Edit Profile",
                     onClick = { navController?.navigate(Screen.EDIT_PROFILE.name) }
                 )
-                CardProfile(
-                    painterResource(
-                        id = R.drawable.ic_favourite
-                    ),
-                    text = "Favourite",
-                    onClick = { navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name) }
-                )
-                CardProfile(
-                    painterResource(
-                        id = R.drawable.ic_lock
-                    ),
-                    text = "Change Password",
-                    onClick = { navController?.navigate(Screen.CHANGE_PASSWORD.name) }
-                )
+//                CardProfile(
+//                    painterResource(
+//                        id = R.drawable.ic_favourite
+//                    ),
+//                    text = "Favourite",
+//                    onClick = { navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name) }
+//                )
+//                CardProfile(
+//                    painterResource(
+//                        id = R.drawable.ic_lock
+//                    ),
+//                    text = "Change Password",
+//                    onClick = { navController?.navigate(Screen.CHANGE_PASSWORD.name) }
+//                )
                 CardProfile(
                     painterResource(
                         id = R.drawable.ic_about
