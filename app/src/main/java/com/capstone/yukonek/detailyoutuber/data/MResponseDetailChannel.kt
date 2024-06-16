@@ -17,16 +17,22 @@ data class MResponseDetailChannel(
 	val items: List<ItemsItem?>? = null
 )
 
-data class Thumbnails(
+data class ItemsItem(
 
-	@field:SerializedName("default")
-	val jsonMemberDefault: JsonMemberDefault? = null,
+	@field:SerializedName("snippet")
+	val snippet: Snippet? = null,
 
-	@field:SerializedName("high")
-	val high: High? = null,
+	@field:SerializedName("kind")
+	val kind: String? = null,
 
-	@field:SerializedName("medium")
-	val medium: Medium? = null
+	@field:SerializedName("etag")
+	val etag: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("statistics")
+	val statistics: Statistics? = null
 )
 
 data class Localized(
@@ -36,18 +42,6 @@ data class Localized(
 
 	@field:SerializedName("title")
 	val title: String? = null
-)
-
-data class High(
-
-	@field:SerializedName("width")
-	val width: Int? = null,
-
-	@field:SerializedName("url")
-	val url: String? = null,
-
-	@field:SerializedName("height")
-	val height: Int? = null
 )
 
 data class Snippet(
@@ -74,16 +68,31 @@ data class Snippet(
 	val thumbnails: Thumbnails? = null
 )
 
-data class Medium(
+data class Thumbnails(
 
-	@field:SerializedName("width")
-	val width: Int? = null,
+	@field:SerializedName("default")
+	val jsonMemberDefault: JsonMemberDefault? = null,
 
-	@field:SerializedName("url")
-	val url: String? = null,
+	@field:SerializedName("high")
+	val high: High? = null,
 
-	@field:SerializedName("height")
-	val height: Int? = null
+	@field:SerializedName("medium")
+	val medium: Medium? = null
+)
+
+data class Statistics(
+
+	@field:SerializedName("videoCount")
+	val videoCount: String? = null,
+
+	@field:SerializedName("subscriberCount")
+	val subscriberCount: String? = null,
+
+	@field:SerializedName("viewCount")
+	val viewCount: String? = null,
+
+	@field:SerializedName("hiddenSubscriberCount")
+	val hiddenSubscriberCount: Boolean? = null
 )
 
 data class JsonMemberDefault(
@@ -98,19 +107,28 @@ data class JsonMemberDefault(
 	val height: Int? = null
 )
 
-data class ItemsItem(
+data class Medium(
 
-	@field:SerializedName("snippet")
-	val snippet: Snippet? = null,
+	@field:SerializedName("width")
+	val width: Int? = null,
 
-	@field:SerializedName("kind")
-	val kind: String? = null,
+	@field:SerializedName("url")
+	val url: String? = null,
 
-	@field:SerializedName("etag")
-	val etag: String? = null,
+	@field:SerializedName("height")
+	val height: Int? = null
+)
 
-	@field:SerializedName("id")
-	val id: String? = null
+data class High(
+
+	@field:SerializedName("width")
+	val width: Int? = null,
+
+	@field:SerializedName("url")
+	val url: String? = null,
+
+	@field:SerializedName("height")
+	val height: Int? = null
 )
 
 data class PageInfo(
