@@ -158,7 +158,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         onPasswordChange = {
                             password = it
                             passwordError =
-                                if (isValidPassword(password)) null else "Password must be at least 6 characters"
+                                if (isValidPassword(password)) null else "Password must be at least 8 characters"
                         },
                         onTrailingIconClick = { hidePassword = !hidePassword },
                         hidePassword = hidePassword,

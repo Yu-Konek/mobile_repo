@@ -59,6 +59,7 @@ fun MainViewForgetPassword(navController: NavHostController? = null) {
             containerColor = MaterialTheme.colorScheme.surface
         ) { innerPadding ->
             var email by remember { mutableStateOf("") }
+            var emailError by remember { mutableStateOf<String?>(null) }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -91,22 +92,32 @@ fun MainViewForgetPassword(navController: NavHostController? = null) {
                         modifier = Modifier.alpha(0.5F)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-//                    MyEmailTextField(
-//                        email = email,
-//                        onEmailChange = { email = it },
-//                        label = "Email",
-//                        textStyle = TextStyle(
-//                            fontSize = 12.sp,
-//                            fontStyle = FontStyle.Normal
-//                        )
-//                    )
+                    MyEmailTextField(
+                        email = email,
+                        onEmailChange = {
+                            email = it
+                            emailError = if (isValidEmail(email)) null else "Invalid email address"
+                        },
+                        label = "Email",
+                        textStyle = TextStyle(
+                            fontSize = 12.sp,
+                            fontStyle = FontStyle.Normal
+                        ),
+                        isError = emailError != null,
+                        errorMessage = emailError
+                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     MyButton(
                         text = "Send",
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { navController?.navigate(Screen.SIGN_IN.name) })
+                        onClick = { navController?.navigate(Screen.SIGN_IN.name) }
+                    )
                 }
             }
         }
     }
+}
+
+private fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
