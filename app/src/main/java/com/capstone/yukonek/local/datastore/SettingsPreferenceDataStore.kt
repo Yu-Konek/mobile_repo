@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,9 +26,13 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
             preferences[THEME_KEY] = isDarkModeActive
         }
     }
+
     companion object {
         @Volatile
         private var INSTANCE: SettingPreferencesDataStore? = null
+
+        private val TOKEN_KEY = stringPreferencesKey("token")
+        private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
         fun getInstance(dataStore: DataStore<Preferences>): SettingPreferencesDataStore {
             return INSTANCE ?: synchronized(this) {
@@ -37,4 +42,27 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
             }
         }
     }
+
+    suspend fun saveUser(user: MUser) {
+        dataStore.edit { preferences ->
+            preferences[TOKEN_KEY] = user.token
+            preferences[IS_LOGIN_KEY] = true
+        }
+    }
+
+    fun getUser(): Flow<MUser> {
+        return dataStore.data.map { prefences ->
+            MUser(
+                prefences[TOKEN_KEY] ?: "",
+                prefences[IS_LOGIN_KEY] ?: false,
+            )
+        }
+    }
+
+    suspend fun logout() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
+
 }

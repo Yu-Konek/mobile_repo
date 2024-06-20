@@ -1,6 +1,7 @@
 package com.capstone.yukonek.welcome
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -28,11 +29,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -40,9 +44,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
+import com.capstone.yukonek.mainscreen.MainViewModelFactory
+import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
@@ -62,6 +69,18 @@ class WelcomeActivity : ComponentActivity() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainViewWelcome(navController: NavHostController? = null) {
+
+    val context = LocalContext.current
+    val viewModel: WelcomeViewModel =
+        viewModel(factory = WelcomeViewModelFactory.getInstance(LocalContext.current))
+    val userLogin by viewModel.getUser().observeAsState()
+    Log.d("ini token dari datastore", userLogin?.token.toString())
+    if (userLogin?.token != "" && userLogin?.isLogin == true) {
+        navController?.navigate(Screen.HOME.name)
+    }
+
+
+
     val pagerState = rememberPagerState(0) {
         3
     }

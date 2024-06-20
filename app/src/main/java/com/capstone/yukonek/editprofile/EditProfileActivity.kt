@@ -114,15 +114,15 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    MyTextTextField(
-                        label = "Name",
-                        text = name,
-                        onTextChange = { name = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
+//                    MyTextTextField(
+//                        label = "Name",
+//                        text = name,
+//                        onTextChange = { name = it },
+//                        textStyle = TextStyle(
+//                            fontSize = 12.sp,
+//                            fontStyle = FontStyle.Normal
+//                        )
+//                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "YouTube",
@@ -131,15 +131,15 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    MyTextTextField(
-                        label = "YouTube",
-                        text = youtube,
-                        onTextChange = { youtube = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
+//                    MyTextTextField(
+//                        label = "YouTube",
+//                        text = youtube,
+//                        onTextChange = { youtube = it },
+//                        textStyle = TextStyle(
+//                            fontSize = 12.sp,
+//                            fontStyle = FontStyle.Normal
+//                        )
+//                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "Instagram",
@@ -148,15 +148,15 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    MyTextTextField(
-                        label = "Instagram",
-                        text = instagram,
-                        onTextChange = { instagram = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
+//                    MyTextTextField(
+//                        label = "Instagram",
+//                        text = instagram,
+//                        onTextChange = { instagram = it },
+//                        textStyle = TextStyle(
+//                            fontSize = 12.sp,
+//                            fontStyle = FontStyle.Normal
+//                        )
+//                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "Email",
@@ -165,15 +165,15 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    MyEmailTextField(
-                        label = "Email",
-                        email = email,
-                        onEmailChange = { email = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
+//                    MyEmailTextField(
+//                        label = "Email",
+//                        email = email,
+//                        onEmailChange = { email = it },
+//                        textStyle = TextStyle(
+//                            fontSize = 12.sp,
+//                            fontStyle = FontStyle.Normal
+//                        )
+//                    )
                     Spacer(modifier = Modifier.height(32.dp))
                     MyButton(text = "Save", modifier = Modifier.fillMaxWidth())
                 }

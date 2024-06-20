@@ -91,15 +91,15 @@ fun MainViewForgetPassword(navController: NavHostController? = null) {
                         modifier = Modifier.alpha(0.5F)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    MyEmailTextField(
-                        email = email,
-                        onEmailChange = { email = it },
-                        label = "Email",
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
+//                    MyEmailTextField(
+//                        email = email,
+//                        onEmailChange = { email = it },
+//                        label = "Email",
+//                        textStyle = TextStyle(
+//                            fontSize = 12.sp,
+//                            fontStyle = FontStyle.Normal
+//                        )
+//                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     MyButton(
                         text = "Send",
