@@ -17,10 +17,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -92,6 +94,10 @@ fun MainViewSignIn(navController: NavHostController? = null) {
     var dialogState by remember { mutableStateOf<Pair<String, () -> Unit>?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
+    val isSignInButtonEnabled = emailError == null && passwordError == null && email.isNotBlank() && password.isNotBlank()
+
+    var showDialog by remember { mutableStateOf(false) }
+
     YuKonekTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -151,7 +157,8 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                         password = password,
                         onPasswordChange = {
                             password = it
-                            passwordError = if (isValidPassword(password)) null else "Password must be at least 6 characters"
+                            passwordError =
+                                if (isValidPassword(password)) null else "Password must be at least 6 characters"
                         },
                         onTrailingIconClick = { hidePassword = !hidePassword },
                         hidePassword = hidePassword,
@@ -180,6 +187,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                     MyButton(
                         text = "Sign In",
                         modifier = Modifier.fillMaxWidth(),
+                        enabled = isSignInButtonEnabled,
                         onClick = {
                             coroutineScope.launch {
                                 viewModel.login(email, password)
@@ -202,7 +210,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                                             }
 
                                             is Result.Error -> {
-                                                    dialogState = Pair(result.error) {}
+                                                showDialog = true
                                             }
                                         }
                                     }
@@ -226,7 +234,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary,
                                 textAlign = TextAlign.Center,
-                                        textDecoration = TextDecoration.Underline
+                                textDecoration = TextDecoration.Underline
                             ),
                             onClick = { navController?.navigate(Screen.SIGN_UP.name) }
                         )
@@ -235,6 +243,30 @@ fun MainViewSignIn(navController: NavHostController? = null) {
             }
         }
     }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(text = "Informasi") },
+            text = { Text("Email atau Password salah") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    coroutineScope.launch {
+                        progressBarVisible = true
+                        Log.d("TAG", "TERTEKAN")
+                    }
+                }) {
+                    Text("")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
+        progressBarVisible = false
+    }
 }
 
 private fun isValidEmail(email: String): Boolean {
@@ -242,6 +274,6 @@ private fun isValidEmail(email: String): Boolean {
 }
 
 private fun isValidPassword(password: String): Boolean {
-    return password.length >= 6
+    return password.length >= 8
 }
 

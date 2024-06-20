@@ -31,6 +31,7 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
         @Volatile
         private var INSTANCE: SettingPreferencesDataStore? = null
 
+        private val NAME_KEY = stringPreferencesKey("name")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
@@ -46,6 +47,7 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
     suspend fun saveUser(user: MUser) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = user.token
+//            preferences[NAME_KEY] ?: "",
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -54,6 +56,7 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
         return dataStore.data.map { prefences ->
             MUser(
                 prefences[TOKEN_KEY] ?: "",
+//                prefences[NAME_KEY] ?: "",
                 prefences[IS_LOGIN_KEY] ?: false,
             )
         }

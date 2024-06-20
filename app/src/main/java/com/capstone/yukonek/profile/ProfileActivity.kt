@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -33,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -84,7 +86,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
     val coroutineScope = rememberCoroutineScope()
     var progressBarVisible by remember { mutableStateOf(false) }
     val navigateToLoginPage by viewModel.navigateToLoginPage.observeAsState()
-
+    var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         LazyColumn(
@@ -174,11 +176,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                 )
                 SwitchWithIconExample(viewmodel = viewModel, themeSettings = themeSettings)
                 Logout(onClick = {
-                    coroutineScope.launch {
-                        progressBarVisible = true
-                        viewModel.logout()
-                        Log.d("TAG", "TERTEKAN")
-                    }
+                    showDialog = true
                 })
                 if (progressBarVisible) {
                     Column {
@@ -194,6 +192,30 @@ fun MainViewProfile(navController: NavHostController? = null) {
         navController?.navigate(Screen.SIGN_IN.name) {
             popUpTo(Screen.PROFILE.name) { inclusive = true }
         }
+    }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(text = "Logout Confirmation") },
+            text = { Text("Are you sure you want to logout?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    coroutineScope.launch {
+                        progressBarVisible = true
+                        viewModel.logout()
+                        Log.d("TAG", "TERTEKAN")
+                    }
+                }) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("No")
+                }
+            }
+        )
     }
 }
 

@@ -85,9 +85,11 @@ fun MainViewSignUp(
     var dialogState by remember { mutableStateOf<Pair<String, () -> Unit>?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
-    fun showDialog(message: String, action: () -> Unit) {
-        dialogState = Pair(message, action)
-    }
+    val isSignUpButtonEnabled =
+        nameError == null && emailError == null && passwordError == null && confirmPasswordError == null &&
+                email.isNotBlank() && password.isNotBlank() && name.isNotBlank() && confirmPassword.isNotBlank()
+
+    var showDialog by remember { mutableStateOf(false) }
 
     YuKonekTheme {
         Scaffold(
@@ -150,11 +152,19 @@ fun MainViewSignUp(
                         errorMessage = emailError
                     )
                     Spacer(modifier = Modifier.height(12.dp))
+                    if (progressBarVisible) {
+                        Column {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.CenterHorizontally)
+                            )
+                        }
+                    }
                     MyPasswordTextField(
                         password = password,
                         onPasswordChange = {
                             password = it
-                            passwordError = if (isValidPassword(password)) null else "Password must be at least 6 characters"
+                            passwordError =
+                                if (isValidPassword(password)) null else "Password must be at least 6 characters"
                         },
                         onTrailingIconClick = { hidePassword = !hidePassword },
                         hidePassword = hidePassword,
@@ -171,7 +181,11 @@ fun MainViewSignUp(
                         password = confirmPassword,
                         onPasswordChange = {
                             confirmPassword = it
-                            confirmPasswordError = if (doPasswordsMatch(password, confirmPassword)) null else "Passwords do not match"
+                            confirmPasswordError = if (doPasswordsMatch(
+                                    password,
+                                    confirmPassword
+                                )
+                            ) null else "Passwords do not match"
                         },
                         onTrailingIconClick = { hidePasswordConfirm = !hidePasswordConfirm },
                         hidePassword = hidePasswordConfirm,
@@ -187,6 +201,7 @@ fun MainViewSignUp(
                     MyButton(
                         text = "Create Account",
                         modifier = Modifier.fillMaxWidth(),
+                        enabled = isSignUpButtonEnabled,
                         onClick = {
                             coroutineScope.launch {
                                 viewModel.register(name, email, password, confirmPassword)
@@ -203,7 +218,7 @@ fun MainViewSignUp(
 
                                             is Result.Error -> {
                                                 progressBarVisible = true
-                                                dialogState = Pair(result.error) {}
+                                                showDialog = true
                                             }
                                         }
                                     }
@@ -212,28 +227,30 @@ fun MainViewSignUp(
                         })
                 }
             }
-            if (progressBarVisible) {
-                Column {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    title = { Text(text = "Logout Confirmation") },
+                    text = { Text("Are you sure you want to logout?") },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            showDialog = false
+                            coroutineScope.launch {
+                                progressBarVisible = true
+                                Log.d("TAG", "TERTEKAN")
+                            }
+                        }) {
+                            Text("Yes")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDialog = false }) {
+                            Text("No")
+                        }
+                    }
+                )
             }
         }
-    }
-    dialogState?.let { (message, action) ->
-        AlertDialog(
-            onDismissRequest = { dialogState = null },
-            confirmButton = {
-                TextButton(onClick = {
-                    dialogState = null
-                    action()
-                }) {
-                    Text(text = stringResource(android.R.string.ok))
-                }
-            },
-            text = { Text(text = message) }
-        )
     }
 }
 
@@ -243,7 +260,7 @@ private fun isValidEmail(email: String): Boolean {
 }
 
 private fun isValidPassword(password: String): Boolean {
-    return password.length >= 6
+    return password.length >= 8
 }
 
 private fun doPasswordsMatch(password: String, confirmPassword: String): Boolean {

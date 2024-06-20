@@ -11,6 +11,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.capstone.yukonek.R
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.lang.Error
 
@@ -56,7 +57,7 @@ fun MyPasswordTextField(
             text = errorMessage ?: "",
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

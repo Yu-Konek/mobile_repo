@@ -75,7 +75,7 @@ fun MainViewWelcome(navController: NavHostController? = null) {
         viewModel(factory = WelcomeViewModelFactory.getInstance(LocalContext.current))
     val userLogin by viewModel.getUser().observeAsState()
     Log.d("ini token dari datastore", userLogin?.token.toString())
-    if (userLogin?.token != "" && userLogin?.isLogin == true) {
+    if (/*userLogin?.name != "",*/ userLogin?.token != "" && userLogin?.isLogin == true) {
         navController?.navigate(Screen.HOME.name)
     }
 

@@ -36,7 +36,7 @@ fun MyTextTextField(
             text = errorMessage ?: "",
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
