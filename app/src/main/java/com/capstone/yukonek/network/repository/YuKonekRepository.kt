@@ -3,6 +3,8 @@ package com.capstone.yukonek.network.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
+import com.capstone.yukonek.BuildConfig
+import com.capstone.yukonek.detailyoutuber.data.MResponseDetailChannel
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.local.datastore.SettingPreferencesDataStore
@@ -11,6 +13,7 @@ import com.capstone.yukonek.network.Result
 import com.capstone.yukonek.network.error.ErrorResponse
 import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
 import com.capstone.yukonek.network.retrofit.newsapi.NewsApiService
+import com.capstone.yukonek.network.retrofit.youtubeapi.YoutubeApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -20,6 +23,7 @@ import retrofit2.HttpException
 class YuKonekRepository private constructor(
     private val apiService: PrivateApiService,
     private val newsApiService: NewsApiService,
+    private val youtubeApiService: YoutubeApiService,
     private val pref: SettingPreferencesDataStore,
     private val savedStateHandle: SavedStateHandle,
     private val database: YuKonekDatabase
@@ -39,6 +43,20 @@ class YuKonekRepository private constructor(
                 val response = newsApiService.getTopEntertainmentHeadlines()
                 emit(Result.Success(response))
             } catch (e: HttpException) {
+                val response = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(response, ErrorResponse::class.java)
+                val errorMessage = errorBody.message
+                emit(Result.Error(errorMessage.toString()))
+            }
+        }
+
+    fun getDetailYoutuber(id:String): LiveData<Result<MResponseDetailChannel>> =
+        liveData {
+            emit(Result.Loading)
+            try{
+                val response = youtubeApiService.getDetailChannel(channelId = id, apiKey = BuildConfig.YOUTUBE_API_KEY)
+                emit(Result.Success(response))
+            }catch (e: HttpException){
                 val response = e.response()?.errorBody()?.string()
                 val errorBody = Gson().fromJson(response, ErrorResponse::class.java)
                 val errorMessage = errorBody.message
@@ -71,6 +89,7 @@ class YuKonekRepository private constructor(
         fun getInstance(
             apiService: PrivateApiService,
             newsApiService: NewsApiService,
+            youtubeApiService: YoutubeApiService,
             pref: SettingPreferencesDataStore,
             savedStateHandle: SavedStateHandle,
             database: YuKonekDatabase
@@ -78,6 +97,7 @@ class YuKonekRepository private constructor(
             instance ?: YuKonekRepository(
                 apiService,
                 newsApiService,
+                youtubeApiService,
                 pref,
                 savedStateHandle,
                 database

@@ -60,123 +60,121 @@ class EditProfileActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainViewEditProfile(navController: NavHostController? = null) {
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                MyTopBar(title = "Edit Profile", onBackClick = {
-                    navController?.popBackStack()
-                })
-            },
-            containerColor = MaterialTheme.colorScheme.surface
-        ) { innerPadding ->
-            var name by remember { mutableStateOf("") }
-            var youtube by remember { mutableStateOf("") }
-            var instagram by remember { mutableStateOf("") }
-            var email by remember { mutableStateOf("") }
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.thumbnail),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(120.dp)
-                                .clip(RoundedCornerShape(48.dp))
-                                .clickable { },
-                            Alignment.Center
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = "Change Photo",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                    }
-
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            MyTopBar(title = "Edit Profile", onBackClick = {
+                navController?.popBackStack()
+            })
+        },
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { innerPadding ->
+        var name by remember { mutableStateOf("") }
+        var youtube by remember { mutableStateOf("") }
+        var instagram by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.thumbnail),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clip(RoundedCornerShape(48.dp))
+                            .clickable { },
+                        Alignment.Center
+                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Name",
+                        text = "Change Photo",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    MyTextTextField(
-                        label = "Name",
-                        text = name,
-                        onTextChange = { name = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "YouTube",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    MyTextTextField(
-                        label = "YouTube",
-                        text = youtube,
-                        onTextChange = { youtube = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Instagram",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    MyTextTextField(
-                        label = "Instagram",
-                        text = instagram,
-                        onTextChange = { instagram = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Email",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    MyEmailTextField(
-                        label = "Email",
-                        email = email,
-                        onEmailChange = { email = it },
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    MyButton(text = "Save", modifier = Modifier.fillMaxWidth())
                 }
+
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "Name",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                MyTextTextField(
+                    label = "Name",
+                    text = name,
+                    onTextChange = { name = it },
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    )
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "YouTube",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                MyTextTextField(
+                    label = "YouTube",
+                    text = youtube,
+                    onTextChange = { youtube = it },
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    )
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Instagram",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                MyTextTextField(
+                    label = "Instagram",
+                    text = instagram,
+                    onTextChange = { instagram = it },
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    )
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Email",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                MyEmailTextField(
+                    label = "Email",
+                    email = email,
+                    onEmailChange = { email = it },
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    )
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                MyButton(text = "Save", modifier = Modifier.fillMaxWidth())
             }
         }
     }
