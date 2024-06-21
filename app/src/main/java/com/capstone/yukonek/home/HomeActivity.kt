@@ -72,7 +72,10 @@ class HomeActivity : ComponentActivity() {
             YuKonekTheme {
                 MainViewHome()
             }
+
         }
+
+
     }
 }
 

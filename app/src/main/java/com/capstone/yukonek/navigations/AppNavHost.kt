@@ -1,7 +1,10 @@
 package com.capstone.yukonek.navigations
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.Navigation
@@ -32,6 +35,7 @@ fun AppNavHost(
     navController: NavHostController,
     startDestination: String = NavigationItem.Welcome.route
 ) {
+    val context = LocalContext.current
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -56,6 +60,9 @@ fun AppNavHost(
         }
         composable(NavigationItem.Home.route) {
             MainViewHome(navController)
+            BackHandler(enabled = true) {
+                (context as? Activity)?.finish()
+            }
         }
         composable(NavigationItem.Profile.route) {
             MainViewProfile(navController)
