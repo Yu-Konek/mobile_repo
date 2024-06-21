@@ -21,6 +21,12 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
         }
     }
 
+    fun getUserData(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USERNAME_KEY] ?: ""
+        }
+    }
+
     suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         dataStore.edit { preferences ->
             preferences[THEME_KEY] = isDarkModeActive
@@ -31,8 +37,8 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
         @Volatile
         private var INSTANCE: SettingPreferencesDataStore? = null
 
-        private val NAME_KEY = stringPreferencesKey("name")
         private val TOKEN_KEY = stringPreferencesKey("token")
+        private val USERNAME_KEY = stringPreferencesKey("username")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
         fun getInstance(dataStore: DataStore<Preferences>): SettingPreferencesDataStore {
@@ -47,7 +53,7 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
     suspend fun saveUser(user: MUser) {
         dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = user.token
-//            preferences[NAME_KEY] ?: user.name
+            preferences[USERNAME_KEY] = user.username
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -56,7 +62,7 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
         return dataStore.data.map { prefences ->
             MUser(
                 prefences[TOKEN_KEY] ?: "",
-//                prefences[NAME_KEY] ?: "",
+                prefences[USERNAME_KEY] ?: "",
                 prefences[IS_LOGIN_KEY] ?: false,
             )
         }
@@ -64,8 +70,8 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-//            preferences.clear()
             preferences[TOKEN_KEY] = ""
+            preferences[USERNAME_KEY] = ""
             preferences[IS_LOGIN_KEY] = false
         }
     }

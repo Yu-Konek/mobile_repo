@@ -204,6 +204,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
                                                 viewModel.saveTokenAndNavigate(
                                                     MUser(
                                                         token = it.accessToken ?: "",
+                                                        username = it.username ?: "",
                                                         isLogin = true
                                                     )
                                                 )

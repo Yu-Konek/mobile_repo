@@ -83,6 +83,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
     val viewModel: ProfileViewModel =
         viewModel(factory = ProfileViewModelFactory.getInstance(LocalContext.current))
     val themeSettings by viewModel.getThemeSettings().collectAsState(initial = false)
+    val user by viewModel.getUserData().collectAsState(initial = "")
     val coroutineScope = rememberCoroutineScope()
     var progressBarVisible by remember { mutableStateOf(false) }
     val navigateToLoginPage by viewModel.navigateToLoginPage.observeAsState()
@@ -118,7 +119,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = "Mohammad Zaghy Zalayetha",
+                            text = user,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             overflow = TextOverflow.Ellipsis
@@ -343,7 +344,7 @@ fun Logout(onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick ),
+            .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
     ) {

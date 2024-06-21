@@ -11,4 +11,6 @@ class MainViewmodel(private val yuKonekRepository: YuKonekRepository) : ViewMode
     fun getTopHeadlineEntertainement() =
         yuKonekRepository.getTopHeadlineEntertainmentNews()
 
+    fun getUserData() = yuKonekRepository.getUserData()
+
 }

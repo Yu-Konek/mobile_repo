@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -35,11 +37,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.textfield.MyEmailTextField
 import com.capstone.yukonek.component.textfield.MyTextTextField
+import com.capstone.yukonek.profile.ProfileViewModel
+import com.capstone.yukonek.profile.ProfileViewModelFactory
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 class EditProfileActivity : ComponentActivity() {
@@ -57,6 +62,11 @@ class EditProfileActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainViewEditProfile(navController: NavHostController? = null) {
+
+    val viewModel: EditProfileViewModel =
+        viewModel(factory = EditProfileViewModelFactory.getInstance(LocalContext.current))
+    val user by viewModel.getUserData().collectAsState(initial = "")
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -75,6 +85,8 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
         var youtubeError by remember { mutableStateOf<String?>(null) }
         var instagramError by remember { mutableStateOf<String?>(null) }
         var emailError by remember { mutableStateOf<String?>(null) }
+
+        name = user
 
         LazyColumn(
             modifier = Modifier

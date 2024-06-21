@@ -22,7 +22,7 @@ import com.capstone.yukonek.R
 import com.example.ui.theme.AppTypography
 
 @Composable
-fun CardDisplayName() {
+fun CardDisplayName(username : String = "") {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -42,7 +42,7 @@ fun CardDisplayName() {
 
             Column(modifier = Modifier.padding(horizontal = 0.dp)) {
                 Text(
-                    "Hi,Zaghy Zalayetha",
+                    text = "Hi, ${username}",
                     style = AppTypography.bodyLarge,
                     color = MaterialTheme.colorScheme.onPrimary
                 )

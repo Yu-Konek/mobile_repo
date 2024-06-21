@@ -111,6 +111,10 @@ class YuKonekRepository private constructor(
         return pref.getUser().asLiveData()
     }
 
+    fun getUserData(): Flow<String> {
+        return pref.getUserData()
+    }
+
     suspend fun saveUser(user: MUser) {
         pref.saveUser(user)
     }
