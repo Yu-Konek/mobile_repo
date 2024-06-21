@@ -60,6 +60,11 @@ fun MainViewChangePassword(navController: NavHostController? = null) {
             var oldPassword by remember { mutableStateOf("") }
             var newPassword by remember { mutableStateOf("") }
             var confirmNewPassword by remember { mutableStateOf("") }
+
+            var oldPasswordError by remember { mutableStateOf<String?>(null) }
+            var newPasswordError by remember { mutableStateOf<String?>(null) }
+            var confirmNewPasswordError by remember { mutableStateOf<String?>(null) }
+
             var hideOldPassword by remember { mutableStateOf(true) }
             var hideNewPassword by remember { mutableStateOf(true) }
             var hideconfirmNewPassword by remember { mutableStateOf(true) }
@@ -89,14 +94,19 @@ fun MainViewChangePassword(navController: NavHostController? = null) {
                     )
                     MyPasswordTextField(
                         password = oldPassword,
-                        onPasswordChange = { oldPassword = it },
+                        onPasswordChange = {
+                            oldPassword = it
+                            oldPasswordError = if (isValidPassword(oldPassword)) null else "Password must be at least 6 characters"
+                        },
                         onTrailingIconClick = { hideOldPassword = !hideOldPassword },
                         hidePassword = hideOldPassword,
                         label = "Old Password",
                         textStyle = TextStyle(
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
-                        )
+                        ),
+                        isError = oldPasswordError != null,
+                        errorMessage = oldPasswordError
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
@@ -108,14 +118,19 @@ fun MainViewChangePassword(navController: NavHostController? = null) {
                     )
                     MyPasswordTextField(
                         password = newPassword,
-                        onPasswordChange = { newPassword = it },
+                        onPasswordChange = {
+                            newPassword = it
+                            newPasswordError = if (isValidPassword(newPassword)) null else "Password must be at least 6 characters"
+                        },
                         onTrailingIconClick = { hideNewPassword = !hideNewPassword },
                         hidePassword = hideNewPassword,
                         label = "New Password",
                         textStyle = TextStyle(
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
-                        )
+                        ),
+                        isError = newPasswordError != null,
+                        errorMessage = newPasswordError
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
@@ -127,14 +142,19 @@ fun MainViewChangePassword(navController: NavHostController? = null) {
                     )
                     MyPasswordTextField(
                         password = confirmNewPassword,
-                        onPasswordChange = { confirmNewPassword = it },
+                        onPasswordChange = {
+                            confirmNewPassword = it
+                            confirmNewPasswordError = if (isValidPassword(confirmNewPassword)) null else "Password must be at least 6 characters"
+                        },
                         onTrailingIconClick = { hideconfirmNewPassword = !hideconfirmNewPassword },
                         hidePassword = hideconfirmNewPassword,
                         label = "Confirmation New Password",
                         textStyle = TextStyle(
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Normal
-                        )
+                        ),
+                        isError = confirmNewPasswordError != null,
+                        errorMessage = confirmNewPasswordError
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     MyButton(text = "Change Password", modifier = Modifier.fillMaxWidth())
@@ -144,4 +164,8 @@ fun MainViewChangePassword(navController: NavHostController? = null) {
     }
 }
 
+
+private fun isValidPassword(password: String): Boolean {
+    return password.length >= 6
+}
 

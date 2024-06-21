@@ -8,8 +8,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 
 @Composable
-fun MyButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit = {} ) {
-    Button(modifier = modifier, onClick = onClick, shape = RoundedCornerShape(8.dp)) {
+fun MyButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}, enabled: Boolean = false) {
+    Button(modifier = modifier, onClick = onClick, shape = RoundedCornerShape(8.dp), enabled = enabled) {
         Text(text = (text))
     }
 }
