@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +23,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,23 +34,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Switch
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
@@ -58,10 +60,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
-import com.capstone.yukonek.mainscreen.MainViewModelFactory
-import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
+import kotlinx.coroutines.launch
 import com.capstone.yukonek.profile.CardProfile as CardProfile
 
 class ProfileActivity : ComponentActivity() {
@@ -79,15 +80,21 @@ class ProfileActivity : ComponentActivity() {
 @Preview(device = Devices.TABLET)
 @Composable
 fun MainViewProfile(navController: NavHostController? = null) {
-    val viewModel: MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
+    val viewModel: ProfileViewModel =
+        viewModel(factory = ProfileViewModelFactory.getInstance(LocalContext.current))
     val themeSettings by viewModel.getThemeSettings().collectAsState(initial = false)
+    val coroutineScope = rememberCoroutineScope()
+    var progressBarVisible by remember { mutableStateOf(false) }
+    val navigateToLoginPage by viewModel.navigateToLoginPage.observeAsState()
+    var showDialog by remember { mutableStateOf(false) }
+
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(vertical = 24.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
@@ -98,9 +105,9 @@ fun MainViewProfile(navController: NavHostController? = null) {
                         .padding(top = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
-                    ) {
+                ) {
                     Image(
-                        painter = painterResource(id = R.drawable.thumbnail),
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
@@ -126,7 +133,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                             Alignment.Center
                         ) {
                             Text(
-                                text = "Gaming",
+                                text = "Education",
                                 color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
@@ -146,20 +153,20 @@ fun MainViewProfile(navController: NavHostController? = null) {
                     text = "Edit Profile",
                     onClick = { navController?.navigate(Screen.EDIT_PROFILE.name) }
                 )
-                CardProfile(
-                    painterResource(
-                        id = R.drawable.ic_favourite
-                    ),
-                    text = "Favourite",
-                    onClick = { navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name) }
-                )
-                CardProfile(
-                    painterResource(
-                        id = R.drawable.ic_lock
-                    ),
-                    text = "Change Password",
-                    onClick = { navController?.navigate(Screen.CHANGE_PASSWORD.name) }
-                )
+//                CardProfile(
+//                    painterResource(
+//                        id = R.drawable.ic_favourite
+//                    ),
+//                    text = "Favourite",
+//                    onClick = { navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name) }
+//                )
+//                CardProfile(
+//                    painterResource(
+//                        id = R.drawable.ic_lock
+//                    ),
+//                    text = "Change Password",
+//                    onClick = { navController?.navigate(Screen.CHANGE_PASSWORD.name) }
+//                )
                 CardProfile(
                     painterResource(
                         id = R.drawable.ic_about
@@ -168,11 +175,50 @@ fun MainViewProfile(navController: NavHostController? = null) {
                     onClick = { navController?.navigate(Screen.ABOUT.name) }
                 )
                 SwitchWithIconExample(viewmodel = viewModel, themeSettings = themeSettings)
-                Logout()
+                Logout(onClick = {
+                    showDialog = true
+                })
+                if (progressBarVisible) {
+                    Column {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
             }
         }
     }
+    if (navigateToLoginPage == true) {
+        navController?.navigate(Screen.SIGN_IN.name) {
+            popUpTo(Screen.PROFILE.name) { inclusive = true }
+        }
+    }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(text = "Logout Confirmation") },
+            text = { Text("Are you sure you want to logout?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    coroutineScope.launch {
+                        progressBarVisible = true
+                        viewModel.logout()
+                        Log.d("TAG", "TERTEKAN")
+                    }
+                }) {
+                    Text("Yes")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("No")
+                }
+            }
+        )
+    }
 }
+
 
 @Composable
 fun CardProfile(
@@ -235,7 +281,10 @@ fun CardProfile(
 
 @Preview
 @Composable
-fun SwitchWithIconExample(viewmodel: MainViewmodel = viewModel(), themeSettings: Boolean = false) {
+fun SwitchWithIconExample(
+    viewmodel: ProfileViewModel = viewModel(),
+    themeSettings: Boolean = false
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -288,12 +337,13 @@ fun SwitchWithIconExample(viewmodel: MainViewmodel = viewModel(), themeSettings:
     }
 }
 
-@Preview
+
 @Composable
-fun Logout() {
+fun Logout(onClick: () -> Unit) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable(onClick = onClick ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
     ) {

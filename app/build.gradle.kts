@@ -20,9 +20,11 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "BASE_URL", "\"https://belumtau/\"")
+        buildConfigField("String", "BASE_URL", "\"https://cc-backend-bgjm4fd6ga-as.a.run.app\"")
         buildConfigField("String", "BASE_URL_NEWS_API", "\"https://api-berita-indonesia.vercel.app\"")
-        buildConfigField("String","API_NEWS_KEY","\"7eab736a4816461f8bc6304cf9d4c293\"")
+        buildConfigField("String","BASE_URL_YOUTUBE_API","\"https://www.googleapis.com/youtube/v3/\"")
+        buildConfigField("String","YOUTUBE_API_KEY","\"AIzaSyAvkn4Q_f6009JHwxlMInIZ-HdxAJ3oCNc\"")
+
     }
     buildTypes {
         release {
@@ -106,6 +108,7 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.hilt.navigation.compose)
     // Coroutine test
     testImplementation(libs.kotlinx.coroutines.test)
     // Mockk for Kotlin

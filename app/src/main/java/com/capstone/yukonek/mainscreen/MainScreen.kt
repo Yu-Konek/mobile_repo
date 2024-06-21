@@ -17,6 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import com.capstone.yukonek.bottomnavigation.BottomNavigationBar
 import com.capstone.yukonek.bottomnavigation.BottomNavigationItem
 import com.capstone.yukonek.navigations.AppNavHost
+import com.capstone.yukonek.profile.ProfileViewModel
+import com.capstone.yukonek.profile.ProfileViewModelFactory
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -27,7 +29,7 @@ fun MainScreen(){
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
 //    getTheme from datastore
-    val viewModel:MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
+    val viewModel:ProfileViewModel = viewModel(factory = ProfileViewModelFactory.getInstance(LocalContext.current))
     val themeSettings by viewModel.getThemeSettings().collectAsState(initial = false)
 
     YuKonekTheme(darkTheme = themeSettings) {

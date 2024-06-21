@@ -53,60 +53,69 @@ class ForgetPasswordActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainViewForgetPassword(navController: NavHostController? = null) {
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = MaterialTheme.colorScheme.surface
-        ) { innerPadding ->
-            var email by remember { mutableStateOf("") }
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Top
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.forgotpassword),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .height(150.dp)
-                    )
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Text(
-                        text = stringResource(R.string.forgot_password),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.desc_forget_pas),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        modifier = Modifier.alpha(0.5F)
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyEmailTextField(
-                        email = email,
-                        onEmailChange = { email = it },
-                        label = "Email",
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(
-                        text = "Send",
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { navController?.navigate(Screen.SIGN_IN.name) })
-                }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { innerPadding ->
+        var email by remember { mutableStateOf("") }
+        var emailError by remember { mutableStateOf<String?>(null) }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Top
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(50.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.forgotpassword),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .height(150.dp)
+                )
+                Spacer(modifier = Modifier.height(50.dp))
+                Text(
+                    text = stringResource(R.string.forgot_password),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.desc_forget_pas),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    modifier = Modifier.alpha(0.5F)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyEmailTextField(
+                    email = email,
+                    onEmailChange = {
+                        email = it
+                        emailError = if (isValidEmail(email)) null else "Invalid email address"
+                    },
+                    label = "Email",
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = emailError != null,
+                    errorMessage = emailError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyButton(
+                    text = "Send",
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { navController?.navigate(Screen.SIGN_IN.name) }
+                )
             }
         }
     }
+}
+
+private fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

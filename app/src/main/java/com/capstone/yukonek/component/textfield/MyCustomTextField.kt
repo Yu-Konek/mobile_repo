@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import java.lang.Error
 
 @Composable
 fun MyCustomTextField(
@@ -20,6 +21,7 @@ fun MyCustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
     textStyle: TextStyle,
+    isError: Boolean,
     // icons param
     leadingIcon: Painter? = null,
     onTrailingIconClick: () -> Unit = {},
@@ -40,6 +42,7 @@ fun MyCustomTextField(
         textStyle = textStyle,
         label = { Text(label) },
         onValueChange = onValueChange,
+        isError = isError,
         // icons
         leadingIcon = leadingIcon?.let {
             {
@@ -61,3 +64,4 @@ fun MyCustomTextField(
         }
     )
 }
+
