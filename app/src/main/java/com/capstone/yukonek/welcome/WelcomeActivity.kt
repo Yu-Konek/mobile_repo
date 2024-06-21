@@ -80,128 +80,125 @@ fun MainViewWelcome(navController: NavHostController? = null) {
     }
 
 
-
     val pagerState = rememberPagerState(0) {
         3
     }
-    YuKonekTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Box(
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
             ) {
-                Column(
+                Icon(
+                    painter = painterResource(id = R.drawable.urban_welcome),
+                    contentDescription = "Welcome Page",
                     modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top
+                        .width(368.dp)
+                        .height(276.dp)
+                        .padding(16.dp),
+                    tint = Color.Unspecified
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Add some space between image and text
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                        ),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.urban_welcome),
-                        contentDescription = "Welcome Page",
-                        modifier = Modifier
-                            .width(368.dp)
-                            .height(276.dp)
-                            .padding(16.dp),
-                        tint = Color.Unspecified
-                    )
-                    Spacer(modifier = Modifier.height(16.dp)) // Add some space between image and text
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                MaterialTheme.colorScheme.primary,
-                                RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier.fillMaxWidth()
-                        ) { page ->
-                            var title = ""
-                            var text = ""
-                            var showButtons = false
-                            when (page) {
-                                0 -> {
-                                    title = "ABOUT"
-                                    text = stringResource(R.string.about_onboarding)
-                                }
-
-                                1 -> {
-                                    title = "WHAT FOR"
-                                    text = stringResource(R.string.what_for_onboarding)
-                                }
-
-                                2 -> {
-                                    title = "WELCOME"
-                                    text = "Welcome to Yu-Konek"
-                                    showButtons = true
-                                }
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { page ->
+                        var title = ""
+                        var text = ""
+                        var showButtons = false
+                        when (page) {
+                            0 -> {
+                                title = "ABOUT"
+                                text = stringResource(R.string.about_onboarding)
                             }
 
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(24.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Top
-                            ) {
-                                Text(
-                                    title,
-                                    style = MaterialTheme.typography.titleLarge,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-                                Text(text = text, color = Color.White, textAlign = TextAlign.Center)
-                                Spacer(modifier = Modifier.height(16.dp))
-                                if (showButtons) {
-                                    Column(
-                                        modifier = Modifier.fillMaxHeight(0.8F),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Bottom
+                            1 -> {
+                                title = "WHAT FOR"
+                                text = stringResource(R.string.what_for_onboarding)
+                            }
+
+                            2 -> {
+                                title = "WELCOME"
+                                text = "Welcome to Yu-Konek"
+                                showButtons = true
+                            }
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                            Text(
+                                title,
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(text = text, color = Color.White, textAlign = TextAlign.Center)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            if (showButtons) {
+                                Column(
+                                    modifier = Modifier.fillMaxHeight(0.8F),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Bottom
+                                ) {
+                                    Button(
+                                        onClick = { navController?.navigate(Screen.SIGN_IN.name) },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .width(200.dp)
                                     ) {
-                                        Button(
-                                            onClick = { navController?.navigate(Screen.SIGN_IN.name) },
-                                            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .width(200.dp)
-                                        ) {
-                                            Text(
-                                                text = "Sign in",
-                                                color = MaterialTheme.colorScheme.primary
-                                            )
-                                        }
-                                        Button(
-                                            onClick = { navController?.navigate(Screen.SIGN_UP.name) },
-                                            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .width(200.dp)
-                                        ) {
-                                            Text(
-                                                text = "Sign Up",
-                                                color = MaterialTheme.colorScheme.primary
-                                            )
-                                        }
+                                        Text(
+                                            text = "Sign in",
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                    Button(
+                                        onClick = { navController?.navigate(Screen.SIGN_UP.name) },
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .width(200.dp)
+                                    ) {
+                                        Text(
+                                            text = "Sign Up",
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
                                     }
                                 }
                             }
                         }
+                    }
 
-                    }
                 }
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    repeat(3) {
-                        CustomIndicator(isSelected = pagerState.currentPage == it)
-                    }
+            }
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                repeat(3) {
+                    CustomIndicator(isSelected = pagerState.currentPage == it)
                 }
             }
         }
