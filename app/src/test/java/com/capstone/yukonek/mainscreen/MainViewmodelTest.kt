@@ -2,6 +2,7 @@ package com.capstone.yukonek.mainscreen
 import CoroutineTestRule
 import androidx.lifecycle.viewModelScope
 import com.capstone.yukonek.network.repository.YuKonekRepository
+import com.capstone.yukonek.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.*
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.flowOf
 class MainViewModelTest {
 
     private val coroutineRule = CoroutineTestRule()
-    private lateinit var viewModel: MainViewmodel
+    private lateinit var viewModel: ProfileViewModel
     private val yuKonekRepository: YuKonekRepository = mockk(relaxed = true)
 
     @get:Rule
@@ -26,7 +27,7 @@ class MainViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = MainViewmodel(yuKonekRepository)
+        viewModel = ProfileViewModel(yuKonekRepository)
     }
 
     @Test

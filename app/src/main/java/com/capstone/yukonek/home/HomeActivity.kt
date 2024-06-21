@@ -29,9 +29,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +57,7 @@ import com.capstone.yukonek.home.data.Channel
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.home.data.channels
+import com.capstone.yukonek.local.datastore.MUser
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
 import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
@@ -74,8 +79,6 @@ class HomeActivity : ComponentActivity() {
             }
 
         }
-
-
     }
 }
 
@@ -85,12 +88,13 @@ fun MainViewHome(navController: NavHostController? = null) {
 
     val viewModel: MainViewmodel = viewModel(factory = MainViewModelFactory(LocalContext.current))
     val entertainmentNews by viewModel.getTopHeadlineEntertainement().observeAsState()
+    val user by viewModel.getUserData().collectAsState(initial = "")
     val reminderViewModel: DetailReminderViewModel = viewModel(
         factory = DetailReminderViewModelFactory.getInstance(
             LocalContext.current
         )
     )
-    val todoItems = reminderViewModel.getAllTodoItems()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -102,7 +106,7 @@ fun MainViewHome(navController: NavHostController? = null) {
 
         ) {
             Column(modifier = Modifier.padding(top = 24.dp)) {
-                CardDisplayName()
+                CardDisplayName(username = user)
             }
 
             Box(
@@ -325,7 +329,7 @@ fun TodoItemUiPreview() {
 @Composable
 fun PreviewCardDisplayName() {
     YuKonekTheme {
-        CardDisplayName()
+//        CardDisplayName()
 
     }
 }

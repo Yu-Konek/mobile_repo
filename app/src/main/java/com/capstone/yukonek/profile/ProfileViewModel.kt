@@ -15,9 +15,11 @@ class ProfileViewModel(private val yuKonekRepository: YuKonekRepository): ViewMo
     init {
         _navigateToLoginPage.value = false
     }
-    fun getUser() = yuKonekRepository.getUser()
+//    fun getUser() = yuKonekRepository.getUser()
 
     fun getThemeSettings() = yuKonekRepository.getTheme()
+
+    fun getUserData() = yuKonekRepository.getUserData()
 
     fun setThemeSettings(isDarkModeActive: Boolean) {
         viewModelScope.launch {
