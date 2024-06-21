@@ -14,8 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.card.CardListYoutuberRow
+import com.capstone.yukonek.home.data.Channel
+import com.capstone.yukonek.home.data.channels
 import com.capstone.yukonek.navigations.Screen
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
@@ -33,6 +36,7 @@ class DetailFavoriteYoutuberActivity : ComponentActivity() {
 
 @Composable
 fun MainViewDetailFavoriteYoutuber(navController: NavHostController? = null) {
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -42,8 +46,8 @@ fun MainViewDetailFavoriteYoutuber(navController: NavHostController? = null) {
         },
     ) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(10) {
-                CardListYoutuberRow(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
+            items(channels.size) {
+                CardListYoutuberRow(onClick = { navController?.navigate("${Screen.DETAIL_YOUTUBER.name}/${channels[it].id}") },name = channels[it].name, thumbnail = channels[it].thumbnail, subscriber = channels[it].subscriber, category = channels[it].category)
                 HorizontalDivider(thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
             }
 

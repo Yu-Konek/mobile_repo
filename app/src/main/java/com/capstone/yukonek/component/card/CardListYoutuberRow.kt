@@ -28,7 +28,7 @@ import com.capstone.yukonek.R
 import com.example.ui.theme.AppTypography
 
 @Composable
-fun CardListYoutuberRow(onClick: () -> Unit = {}) {
+fun CardListYoutuberRow(onClick: () -> Unit = {},thumbnail:Int,name:String,subscriber:String,category:String) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -44,7 +44,7 @@ fun CardListYoutuberRow(onClick: () -> Unit = {}) {
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.thumbnail),
+                painter = painterResource(id = thumbnail),
                 contentDescription = "thumbnail youtuber",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -53,7 +53,7 @@ fun CardListYoutuberRow(onClick: () -> Unit = {}) {
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    text = "Jerome Polin",
+                    text = name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
@@ -67,14 +67,14 @@ fun CardListYoutuberRow(onClick: () -> Unit = {}) {
                     ), shape = RoundedCornerShape(50.dp)
                 ) {
                     Text(
-                        "Education",
+                        category,
                         style = AppTypography.labelMedium,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "10,5 jt subscriber",
+                    text = "${subscriber} subscriber",
                     fontSize = 14.sp,
                     color = Color.Gray
                 )

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import com.capstone.yukonek.BuildConfig
+import com.capstone.yukonek.detailyoutuber.data.MResponseDetailChannel
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
 import com.capstone.yukonek.local.datastore.MUser
@@ -15,6 +17,8 @@ import com.capstone.yukonek.network.retrofit.RequestBody.LoginRequest
 import com.capstone.yukonek.network.retrofit.RequestBody.RegisterRequest
 import com.capstone.yukonek.network.retrofit.myapi.PrivateApiService
 import com.capstone.yukonek.network.retrofit.newsapi.NewsApiService
+import com.capstone.yukonek.network.retrofit.youtubeapi.YoutubeApiService
+
 import com.capstone.yukonek.signin.model.MResponseLogin
 import com.capstone.yukonek.signup.model.MResponseRegister
 import com.google.gson.Gson
@@ -26,6 +30,7 @@ import retrofit2.HttpException
 class YuKonekRepository private constructor(
     private val apiService: PrivateApiService,
     private val newsApiService: NewsApiService,
+    private val youtubeApiService: YoutubeApiService,
     private val pref: SettingPreferencesDataStore,
     private val savedStateHandle: SavedStateHandle,
     private val database: YuKonekDatabase
@@ -89,6 +94,19 @@ class YuKonekRepository private constructor(
             }
         }
 
+    fun getDetailYoutuber(id:String): LiveData<Result<MResponseDetailChannel>> =
+        liveData {
+            emit(Result.Loading)
+            try{
+                val response = youtubeApiService.getDetailChannel(channelId = id, apiKey = BuildConfig.YOUTUBE_API_KEY)
+                emit(Result.Success(response))
+            }catch (e: HttpException){
+                val response = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(response, ErrorResponse::class.java)
+                val errorMessage = errorBody.message
+                emit(Result.Error(errorMessage.toString()))
+            }
+        }
     fun getUser(): LiveData<MUser> {
         return pref.getUser().asLiveData()
     }
@@ -126,6 +144,7 @@ class YuKonekRepository private constructor(
         fun getInstance(
             apiService: PrivateApiService,
             newsApiService: NewsApiService,
+            youtubeApiService: YoutubeApiService,
             pref: SettingPreferencesDataStore,
             savedStateHandle: SavedStateHandle,
             database: YuKonekDatabase
@@ -133,6 +152,7 @@ class YuKonekRepository private constructor(
             instance ?: YuKonekRepository(
                 apiService,
                 newsApiService,
+                youtubeApiService,
                 pref,
                 savedStateHandle,
                 database

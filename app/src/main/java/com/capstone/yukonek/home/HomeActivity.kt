@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.capstone.yukonek.R
 import com.capstone.yukonek.component.card.CardDisplayName
 import com.capstone.yukonek.component.card.CardEntertainmentNews
 import com.capstone.yukonek.component.card.CardListYoutuberColumn
@@ -48,8 +49,10 @@ import com.capstone.yukonek.component.reminder.TodoItemUi
 import com.capstone.yukonek.component.reminder.TodoItemsContainer
 import com.capstone.yukonek.detailreminder.DetailReminderViewModel
 import com.capstone.yukonek.detailreminder.DetailReminderViewModelFactory
+import com.capstone.yukonek.home.data.Channel
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
+import com.capstone.yukonek.home.data.channels
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
 import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
@@ -99,7 +102,6 @@ fun MainViewHome(navController: NavHostController? = null) {
                 CardDisplayName()
             }
 
-            // Content area (Placeholder for main content)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -133,8 +135,12 @@ fun MainViewHome(navController: NavHostController? = null) {
                             }
                         }
                         LazyRow(modifier = Modifier.fillMaxWidth()) {
-                            items(5) {
-                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
+                            items(channels.size-5){
+                                CardListYoutuberColumn(onClick = { navController?.navigate("${Screen.DETAIL_YOUTUBER.name}/${channels[it].id}") },
+                                    name = channels[it].name,
+                                    thumbnail = channels[it].thumbnail,
+                                    subscribers = channels[it].subscriber,
+                                    category = channels[it].category)
                                 Spacer(modifier = Modifier.width(12.dp))
                             }
                         }
@@ -142,30 +148,30 @@ fun MainViewHome(navController: NavHostController? = null) {
                         Spacer(modifier = Modifier.height(24.dp))
 
                     }
-                    item {
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                "Reminders",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            IconButton(onClick = {
-                                navController?.navigate(Screen.DETAIL_REMINDER.name)
-                            }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "View All",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-                    item {
+//                    item {
+//                        Row(
+//                            horizontalArrangement = Arrangement.SpaceBetween,
+//                            verticalAlignment = Alignment.CenterVertically,
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(
+//                                "Reminders",
+//                                style = MaterialTheme.typography.titleMedium,
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
+//                            IconButton(onClick = {
+//                                navController?.navigate(Screen.DETAIL_REMINDER.name)
+//                            }) {
+//                                Icon(
+//                                    Icons.AutoMirrored.Filled.ArrowForward,
+//                                    contentDescription = "View All",
+//                                    tint = MaterialTheme.colorScheme.primary
+//                                )
+//                            }
+//                        }
+//                        Spacer(modifier = Modifier.height(8.dp))
+//                    }
+//                    item {
 //                        TodoItemUi(TodoItem(title = todoItems. toString()))
 //                        Log.d("ini apa", todoItems.toString())
 //                        TodoItemsContainer(
@@ -178,39 +184,39 @@ fun MainViewHome(navController: NavHostController? = null) {
 //                            },
 //                            overlappingElementsHeight = OverlappingHeight
 //                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                    }
-                    item {
-                        //                        Favorite Youtubers
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                "Your FavTubers",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            IconButton(onClick = {
-                                navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
-                            }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "View All",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
-                        LazyRow(modifier = Modifier.fillMaxWidth()) {
-                            items(5) {
-                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
-                                Spacer(modifier = Modifier.width(12.dp))
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(24.dp))
-                    }
+//                        Spacer(modifier = Modifier.height(4.dp))
+//                    }
+//                    item {
+//                        //                        Favorite Youtubers
+//                        Row(
+//                            horizontalArrangement = Arrangement.SpaceBetween,
+//                            verticalAlignment = Alignment.CenterVertically,
+//                            modifier = Modifier.fillMaxWidth()
+//                        ) {
+//                            Text(
+//                                "Your FavTubers",
+//                                style = MaterialTheme.typography.titleMedium,
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
+//                            IconButton(onClick = {
+//                                navController?.navigate(Screen.DETAIL_FAVORITE_YOUTUBER.name)
+//                            }) {
+//                                Icon(
+//                                    Icons.AutoMirrored.Filled.ArrowForward,
+//                                    contentDescription = "View All",
+//                                    tint = MaterialTheme.colorScheme.primary
+//                                )
+//                            }
+//                        }
+//                        LazyRow(modifier = Modifier.fillMaxWidth()) {
+//                            items(5) {
+//                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) })
+//                                Spacer(modifier = Modifier.width(12.dp))
+//                            }
+//                        }
+//
+//                        Spacer(modifier = Modifier.height(24.dp))
+//                    }
                     item {
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -321,13 +327,13 @@ fun PreviewCardDisplayName() {
     }
 }
 
-@Preview
-@Composable
-fun PreviewCardListYoutuber() {
-    YuKonekTheme {
-        CardListYoutuberColumn()
-    }
-}
+//@Preview
+//@Composable
+//fun PreviewCardListYoutuber() {
+//    YuKonekTheme {
+//        CardListYoutuberColumn()
+//    }
+//}
 
 
 @Preview()

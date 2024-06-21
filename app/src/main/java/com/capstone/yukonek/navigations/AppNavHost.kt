@@ -42,7 +42,7 @@ fun AppNavHost(
         composable(NavigationItem.Welcome.route) {
             MainViewWelcome(navController)
         }
-        composable(NavigationItem.SignIn.route){
+        composable(NavigationItem.SignIn.route) {
             MainViewSignIn(navController)
         }
         composable(NavigationItem.SignUp.route) {
@@ -60,19 +60,23 @@ fun AppNavHost(
         composable(NavigationItem.Profile.route) {
             MainViewProfile(navController)
         }
-        composable(NavigationItem.DetailYoutuber.route){
-            MainViewDetailYoutuber(navController)
+        composable(
+            "${NavigationItem.DetailYoutuber.route}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) {entry->
+            val id = entry.arguments?.getString("id") ?: ""
+            MainViewDetailYoutuber(navController,id)
         }
-        composable(NavigationItem.DetailYoutuberForYou.route){
+        composable(NavigationItem.DetailYoutuberForYou.route) {
             MainViewDetailYoutuberForYou(navController)
         }
-        composable(NavigationItem.DetailReminder.route){
+        composable(NavigationItem.DetailReminder.route) {
             MainViewDetailReminder(navController)
         }
-        composable(NavigationItem.DetailFavoriteYoutuber.route){
+        composable(NavigationItem.DetailFavoriteYoutuber.route) {
             MainViewDetailFavoriteYoutuber(navController)
         }
-        composable(NavigationItem.EditProfile.route){
+        composable(NavigationItem.EditProfile.route) {
             MainViewEditProfile(navController)
         }
         composable(NavigationItem.ChangePassword.route) {
@@ -84,7 +88,7 @@ fun AppNavHost(
         composable(
             "${NavigationItem.DetailNews.route}/{url}",
             arguments = listOf(navArgument("url") { type = NavType.StringType })
-        ) {entry->
+        ) { entry ->
             val url = entry.arguments?.getString("url") ?: ""
             DetailNewsWebViews(url = url)
         }

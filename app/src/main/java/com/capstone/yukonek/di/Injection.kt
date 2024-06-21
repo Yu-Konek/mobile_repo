@@ -8,15 +8,17 @@ import com.capstone.yukonek.local.room.YuKonekDatabase
 import com.capstone.yukonek.network.repository.YuKonekRepository
 import com.capstone.yukonek.network.retrofit.myapi.PrivateApiConfig
 import com.capstone.yukonek.network.retrofit.newsapi.NewsApiConfig
+import com.capstone.yukonek.network.retrofit.youtubeapi.YoutubeApiConfig
 
 object Injection {
     fun provideRepository(context: Context): YuKonekRepository {
         val preferences = SettingPreferencesDataStore.getInstance(context.dataStore)
         val apiService = PrivateApiConfig.getApiService()
         val newsApiService = NewsApiConfig.getApiService()
+        val youtubeApiService = YoutubeApiConfig.getApiService()
         val database = YuKonekDatabase.getInstance(context)
         return YuKonekRepository.getInstance(
-            apiService, newsApiService, preferences,
+            apiService, newsApiService,youtubeApiService, preferences,
             SavedStateHandle(), database
         )
     }

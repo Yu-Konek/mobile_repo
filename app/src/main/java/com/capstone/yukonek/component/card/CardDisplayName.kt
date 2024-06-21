@@ -54,7 +54,7 @@ fun CardDisplayName() {
             }
         }
         Image(
-            painter = painterResource(id = R.drawable.ic_category_video_games),
+            painter = painterResource(id = R.drawable.ic_category_education),
             contentDescription = "Foto Profil",
             colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onPrimary),
             contentScale = ContentScale.Crop,
