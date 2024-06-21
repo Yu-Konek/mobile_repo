@@ -52,6 +52,7 @@ import com.capstone.yukonek.detailreminder.DetailReminderViewModelFactory
 import com.capstone.yukonek.home.data.Channel
 import com.capstone.yukonek.home.data.MResponseNews
 import com.capstone.yukonek.home.data.TodoItem
+import com.capstone.yukonek.home.data.channels
 import com.capstone.yukonek.mainscreen.MainViewModelFactory
 import com.capstone.yukonek.mainscreen.MainViewmodel
 import com.capstone.yukonek.navigations.Screen
@@ -87,19 +88,6 @@ fun MainViewHome(navController: NavHostController? = null) {
         )
     )
     val todoItems = reminderViewModel.getAllTodoItems()
-    val channels = listOf(
-        Channel(name = "Jerome Polin", thumbnail = R.drawable.thumbnail, subscriber = "10,5M", category = "Education"),
-        Channel(name = "Leonardo Edwin", thumbnail = R.drawable.leonardo, subscriber = "2M", category = "Education"),
-        Channel(name = "Zahid Ibrahim", thumbnail = R.drawable.zahid, subscriber = "597K", category = "Education"),
-        Channel(name = "Zhafira Aqyla", thumbnail = R.drawable.zhafira, subscriber = "356K", category = "Education"),
-        Channel(name = "Naila Farhana", thumbnail = R.drawable.naila, subscriber = "799K", category = "Education"),
-        Channel(name = "Turah Parthayana", thumbnail = R.drawable.turah, subscriber = "1,950M", category = "Education"),
-        Channel(name = "Indah Gilang Pusparani", thumbnail = R.drawable.indah, subscriber = "2,870K", category = "Education"),
-        Channel(name = "Nadhira Nuraini Afifa", thumbnail = R.drawable.nadhira, subscriber = "269K", category = "Education"),
-        Channel(name = "Gita Savitri Devi", thumbnail = R.drawable.gita, subscriber = "1,340M", category = "Education"),
-        Channel(name = "Raymond Chin", thumbnail = R.drawable.raymond, subscriber = "1,770M", category = "Education"),
-        // Add more channels as needed
-    )
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -148,7 +136,7 @@ fun MainViewHome(navController: NavHostController? = null) {
                         }
                         LazyRow(modifier = Modifier.fillMaxWidth()) {
                             items(channels.size-5){
-                                CardListYoutuberColumn(onClick = { navController?.navigate(Screen.DETAIL_YOUTUBER.name) },
+                                CardListYoutuberColumn(onClick = { navController?.navigate("${Screen.DETAIL_YOUTUBER.name}/${channels[it].id}") },
                                     name = channels[it].name,
                                     thumbnail = channels[it].thumbnail,
                                     subscribers = channels[it].subscriber,

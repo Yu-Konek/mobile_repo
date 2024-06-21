@@ -62,47 +62,46 @@ class DetailYoutuberActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun MainViewDetailYoutuber(navController: NavHostController? = null) {
+fun MainViewDetailYoutuber(navController: NavHostController? = null, id: String? = null) {
     val viewModel: DetailYoutuberViewModel = viewModel(
         factory = DetailYoutuberViewModelFactory(
             LocalContext.current
         )
     )
-    val detailYoutuber by viewModel.getDetailYoutuber(id = "UC1Gmqqs_Myzl2KHIeqfUC9A")
+    val detailYoutuber by viewModel.getDetailYoutuber(id = id ?: "")
         .observeAsState()
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                MyTopBar(title = "Detail Youtuber", onBackClick = {
-                    navController?.popBackStack()
-                })
-            },
-            containerColor = MaterialTheme.colorScheme.surface
-        ) { innerPadding ->
-            Box(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(24.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    when (detailYoutuber) {
-                        is Result.Loading -> {
-                            item {
-                                CircularProgressIndicator()
-                            }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            MyTopBar(title = "Detail Youtuber", onBackClick = {
+                navController?.popBackStack()
+            })
+        },
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { innerPadding ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                when (detailYoutuber) {
+                    is Result.Loading -> {
+                        item {
+                            CircularProgressIndicator()
                         }
+                    }
 
-                        is Result.Success -> {
-                            (detailYoutuber as Result.Success<MResponseDetailChannel>).data.items.let { items ->
-                                items?.forEach { detail ->
-                                    item {
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            modifier = Modifier.fillMaxWidth()
-                                        ) {
+                    is Result.Success -> {
+                        (detailYoutuber as Result.Success<MResponseDetailChannel>).data.items.let { items ->
+                            items?.forEach { detail ->
+                                item {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
 //                                            Image(
 //                                                painter = painterResource(id = R.drawable.thumbnail),
 //                                                contentDescription = null,
@@ -112,92 +111,96 @@ fun MainViewDetailYoutuber(navController: NavHostController? = null) {
 //                                                    .clickable { },
 //                                                Alignment.Center
 //                                            )
-                                            AsyncImage(
-                                                model = detail?.snippet?.thumbnails?.medium?.url ?: "",
-                                                contentDescription = "Thumbnail News",
-                                                modifier = Modifier
-                                                    .size(120.dp)
-                                                    .clip(RoundedCornerShape(48.dp))
-                                                    .clickable { },
+                                        AsyncImage(
+                                            model = detail?.snippet?.thumbnails?.medium?.url ?: "",
+                                            contentDescription = "Thumbnail News",
+                                            modifier = Modifier
+                                                .size(120.dp)
+                                                .clip(RoundedCornerShape(48.dp))
+                                                .clickable { },
 
                                             )
-                                            Spacer(modifier = Modifier.height(12.dp))
-                                            Text(
-                                                text = detail?.snippet?.title ?: "-",
-                                                style = MaterialTheme.typography.titleLarge,
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 16.sp,
-                                                color = MaterialTheme.colorScheme.primary,
-                                            )
-                                            Text(
-                                                text = Utilities().formatSubscribers(detail?.statistics?.subscriberCount?.toInt() ?: 0),
-                                                style = MaterialTheme.typography.titleLarge,
-                                                fontWeight = FontWeight.Normal,
-                                                fontSize = 14.sp,
-                                                color = MaterialTheme.colorScheme.primary,
-                                            )
-                                        }
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                        Text(
+                                            text = detail?.snippet?.title ?: "-",
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 16.sp,
+                                            color = MaterialTheme.colorScheme.primary,
+                                        )
+                                        Text(
+                                            text = Utilities().formatSubscribers(
+                                                detail?.statistics?.subscriberCount?.toInt() ?: 0
+                                            ),
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.Normal,
+                                            fontSize = 14.sp,
+                                            color = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
 
-                                        Spacer(modifier = Modifier.height(24.dp))
+                                    Spacer(modifier = Modifier.height(24.dp))
+                                    Text(
+                                        text = "Years Join YouTube",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                    Text(
+                                        text = Utilities().convertDateString(
+                                            detail?.snippet?.publishedAt ?: "-"
+                                        ),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Text(
+                                        text = "Genre",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                    Text(
+                                        text = "Education",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Text(
+                                        text = "About",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 16.sp,
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                    Text(
+                                        text = detail?.snippet?.description ?: "-",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 14.sp,
+                                        textAlign = TextAlign.Justify,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Column {
                                         Text(
-                                            text = "Years Join YouTube",
+                                            text = "LINK",
                                             style = MaterialTheme.typography.titleLarge,
                                             fontWeight = FontWeight.Bold,
                                             fontSize = 16.sp,
                                             color = MaterialTheme.colorScheme.primary,
                                         )
-                                        Text(
-                                            text = Utilities().convertDateString(detail?.snippet?.publishedAt ?: "-"),
-                                            style = MaterialTheme.typography.titleLarge,
-                                            fontWeight = FontWeight.Normal,
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.primary,
+                                        LinkRow(
+                                            navController = navController,
+                                            painter = painterResource(id = R.drawable.youtube),
+                                            link = "www.youtube.com/${detail?.snippet?.customUrl ?: ""}"
                                         )
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                        Text(
-                                            text = "Genre",
-                                            style = MaterialTheme.typography.titleLarge,
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 16.sp,
-                                            color = MaterialTheme.colorScheme.primary,
-                                        )
-                                        Text(
-                                            text = "Education",
-                                            style = MaterialTheme.typography.titleLarge,
-                                            fontWeight = FontWeight.Normal,
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.primary,
-                                        )
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                        Text(
-                                            text = "About",
-                                            style = MaterialTheme.typography.titleLarge,
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 16.sp,
-                                            color = MaterialTheme.colorScheme.primary,
-                                        )
-                                        Text(
-                                            text = detail?.snippet?.description ?: "-",
-                                            style = MaterialTheme.typography.titleLarge,
-                                            fontWeight = FontWeight.Normal,
-                                            fontSize = 14.sp,
-                                            textAlign = TextAlign.Justify,
-                                            color = MaterialTheme.colorScheme.primary
-                                        )
-                                        Spacer(modifier = Modifier.height(12.dp))
-                                        Column {
-                                            Text(
-                                                text = "LINK",
-                                                style = MaterialTheme.typography.titleLarge,
-                                                fontWeight = FontWeight.Bold,
-                                                fontSize = 16.sp,
-                                                color = MaterialTheme.colorScheme.primary,
-                                            )
-                                            LinkRow(
-                                                navController = navController,
-                                                painter = painterResource(id = R.drawable.youtube),
-                                                link = "www.youtube.com/${detail?.snippet?.customUrl ?: ""}"
-                                            )
 //                                            LinkRow(
 //                                                painter = painterResource(id = R.drawable.instagram),
 //                                                link = "www.instagram.com"
@@ -206,26 +209,26 @@ fun MainViewDetailYoutuber(navController: NavHostController? = null) {
 //                                                painter = painterResource(id = R.drawable.gmail),
 //                                                link = "mail.google.com"
 //                                            )
-                                        }
                                     }
                                 }
                             }
-
                         }
 
-                        is Result.Error -> {
-                            item {
-                                Text(text = "Null")
-                            }
-
-                        }
-
-                        else -> {
-//                            do nothing
-                        }
                     }
 
+                    is Result.Error -> {
+                        item {
+                            Text(text = "Null")
+                        }
+
+                    }
+
+                    else -> {
+//                            do nothing
+                    }
                 }
+
+            }
 //                Box(
 //                    modifier = Modifier
 //                        .align(Alignment.BottomEnd)
@@ -233,7 +236,6 @@ fun MainViewDetailYoutuber(navController: NavHostController? = null) {
 //                ) {
 //                    FavoriteButton()
 //                }
-            }
         }
     }
 }
@@ -273,7 +275,7 @@ fun LinkRow(
     painter: Painter,
     link: String,
 
-) {
+    ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.clickable {

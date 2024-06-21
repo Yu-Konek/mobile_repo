@@ -100,7 +100,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                     horizontalArrangement = Arrangement.Start
                     ) {
                     Image(
-                        painter = painterResource(id = R.drawable.thumbnail),
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = null,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
@@ -126,7 +126,7 @@ fun MainViewProfile(navController: NavHostController? = null) {
                             Alignment.Center
                         ) {
                             Text(
-                                text = "Gaming",
+                                text = "Education",
                                 color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
