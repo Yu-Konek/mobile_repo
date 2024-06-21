@@ -30,7 +30,7 @@ import com.capstone.yukonek.welcome.MainViewWelcome
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Home.route
+    startDestination: String = NavigationItem.Welcome.route
 ) {
     NavHost(
         modifier = modifier,

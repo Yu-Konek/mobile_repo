@@ -9,7 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -41,7 +39,6 @@ import androidx.navigation.NavHostController
 import com.capstone.yukonek.R
 import com.capstone.yukonek.component.appbar.MyTopBar
 import com.capstone.yukonek.component.textfield.MyEmailTextField
-import com.capstone.yukonek.component.textfield.MyPasswordTextField
 import com.capstone.yukonek.component.textfield.MyTextTextField
 import com.capstone.yukonek.ui.theme.YuKonekTheme
 
@@ -73,6 +70,12 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
         var youtube by remember { mutableStateOf("") }
         var instagram by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
+
+        var nameError by remember { mutableStateOf<String?>(null) }
+        var youtubeError by remember { mutableStateOf<String?>(null) }
+        var instagramError by remember { mutableStateOf<String?>(null) }
+        var emailError by remember { mutableStateOf<String?>(null) }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -116,11 +119,16 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                 MyTextTextField(
                     label = "Name",
                     text = name,
-                    onTextChange = { name = it },
+                    onTextChange = {
+                        name = it
+                        nameError = if (name.isNotEmpty()) null else "Name cannot be empty"
+                    },
                     textStyle = TextStyle(
                         fontSize = 12.sp,
                         fontStyle = FontStyle.Normal
-                    )
+                    ),
+                    isError = nameError != null,
+                    errorMessage = nameError
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
@@ -133,11 +141,17 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                 MyTextTextField(
                     label = "YouTube",
                     text = youtube,
-                    onTextChange = { youtube = it },
+                    onTextChange = {
+                        youtube = it
+                        youtubeError =
+                            if (youtube.isNotEmpty()) null else "YouTube cannot be empty"
+                    },
                     textStyle = TextStyle(
                         fontSize = 12.sp,
                         fontStyle = FontStyle.Normal
-                    )
+                    ),
+                    isError = youtubeError != null,
+                    errorMessage = youtubeError
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
@@ -150,11 +164,17 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                 MyTextTextField(
                     label = "Instagram",
                     text = instagram,
-                    onTextChange = { instagram = it },
+                    onTextChange = {
+                        instagram = it
+                        instagramError =
+                            if (instagram.isNotEmpty()) null else "Instagram cannot be empty"
+                    },
                     textStyle = TextStyle(
                         fontSize = 12.sp,
                         fontStyle = FontStyle.Normal
-                    )
+                    ),
+                    isError = instagramError != null,
+                    errorMessage = instagramError
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
@@ -167,16 +187,25 @@ fun MainViewEditProfile(navController: NavHostController? = null) {
                 MyEmailTextField(
                     label = "Email",
                     email = email,
-                    onEmailChange = { email = it },
+                    onEmailChange = {
+                        email = it
+                        emailError = if (isValidEmail(email)) null else "Invalid email address"
+                    },
                     textStyle = TextStyle(
                         fontSize = 12.sp,
                         fontStyle = FontStyle.Normal
-                    )
+                    ),
+                    isError = emailError != null,
+                    errorMessage = emailError
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 MyButton(text = "Save", modifier = Modifier.fillMaxWidth())
             }
         }
     }
+}
+
+private fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
 
