@@ -79,6 +79,7 @@ fun MainViewSignIn(navController: NavHostController? = null) {
     val shouldNavigate by viewModel.navigateToHomePage.observeAsState()
     LaunchedEffect(shouldNavigate) {
         if (shouldNavigate == true) {
+            Log.d("SignIn",shouldNavigate.toString())
             navController?.navigate(Screen.HOME.name)
         }
     }
@@ -94,151 +95,150 @@ fun MainViewSignIn(navController: NavHostController? = null) {
     var dialogState by remember { mutableStateOf<Pair<String, () -> Unit>?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
-    val isSignInButtonEnabled = emailError == null && passwordError == null && email.isNotBlank() && password.isNotBlank()
+    val isSignInButtonEnabled =
+        emailError == null && passwordError == null && email.isNotBlank() && password.isNotBlank()
 
     var showDialog by remember { mutableStateOf(false) }
 
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = MaterialTheme.colorScheme.surface
-        ) { innerPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.surface
+    ) { innerPadding ->
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                item {
-                    Text(
-                        text = stringResource(R.string.welcome_back),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Text(
+                    text = stringResource(R.string.welcome_back),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.welcome_text),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.alpha(0.5F)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                if (progressBarVisible) {
+                    Column {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+                MyEmailTextField(
+                    email = email,
+                    onEmailChange = {
+                        email = it
+                        emailError = if (isValidEmail(email)) null else "Invalid email address"
+                    },
+                    label = stringResource(R.string.email),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal,
                         color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.welcome_text),
-                        style = MaterialTheme.typography.titleMedium,
+                    ),
+                    isError = emailError != null,
+                    errorMessage = emailError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyPasswordTextField(
+                    password = password,
+                    onPasswordChange = {
+                        password = it
+                        passwordError =
+                            if (isValidPassword(password)) null else "Password must be at least 8 characters"
+                    },
+                    onTrailingIconClick = { hidePassword = !hidePassword },
+                    hidePassword = hidePassword,
+                    label = stringResource(R.string.password),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = passwordError != null,
+                    errorMessage = passwordError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                ClickableText(
+                    text = AnnotatedString(stringResource(id = R.string.forgot_password)),
+                    style = TextStyle(
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.alpha(0.5F)
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (progressBarVisible) {
-                        Column {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.End,
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { navController?.navigate(Screen.FORGOT_PASSWORD.name) }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyButton(
+                    text = "Sign In",
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = isSignInButtonEnabled,
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.login(email, password)
+                                .observe(context as ComponentActivity) { result ->
+                                    when (result) {
+                                        is Result.Loading -> {
+                                            progressBarVisible = true
+                                        }
+
+                                        is Result.Success -> {
+                                            progressBarVisible = true
+                                            result.data.let {
+                                                viewModel.saveTokenAndNavigate(
+                                                    MUser(
+                                                        token = it.accessToken ?: "",
+                                                        isLogin = true
+                                                    )
+                                                )
+                                            }
+                                        }
+
+                                        is Result.Error -> {
+                                            showDialog = true
+                                        }
+                                    }
+                                }
+                            Log.d("TAG", "TERTEKAN")
                         }
                     }
-                    MyEmailTextField(
-                        email = email,
-                        onEmailChange = {
-                            email = it
-                            emailError = if (isValidEmail(email)) null else "Invalid email address"
-                        },
-                        label = stringResource(R.string.email),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal,
-                            color = MaterialTheme.colorScheme.primary
-                        ),
-                        isError = emailError != null,
-                        errorMessage = emailError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row {
+                    Text(
+                        text = stringResource(R.string.don_t_have_account),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyPasswordTextField(
-                        password = password,
-                        onPasswordChange = {
-                            password = it
-                            passwordError =
-                                if (isValidPassword(password)) null else "Password must be at least 8 characters"
-                        },
-                        onTrailingIconClick = { hidePassword = !hidePassword },
-                        hidePassword = hidePassword,
-                        label = stringResource(R.string.password),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        ),
-                        isError = passwordError != null,
-                        errorMessage = passwordError
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
                     ClickableText(
-                        text = AnnotatedString(stringResource(id = R.string.forgot_password)),
+                        text = AnnotatedString(stringResource(id = R.string.welcome_text_sign_up)),
                         style = TextStyle(
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary,
-                            textAlign = TextAlign.End,
+                            textAlign = TextAlign.Center,
                             textDecoration = TextDecoration.Underline
                         ),
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { navController?.navigate(Screen.FORGOT_PASSWORD.name) }
+                        onClick = { navController?.navigate(Screen.SIGN_UP.name) }
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(
-                        text = "Sign In",
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = isSignInButtonEnabled,
-                        onClick = {
-                            coroutineScope.launch {
-                                viewModel.login(email, password)
-                                    .observe(context as ComponentActivity) { result ->
-                                        when (result) {
-                                            is Result.Loading -> {
-                                                progressBarVisible = true
-                                            }
-
-                                            is Result.Success -> {
-                                                progressBarVisible = true
-                                                result.data.let {
-                                                    viewModel.saveTokenAndNavigate(
-                                                        MUser(
-                                                            token = it.accessToken ?: "",
-                                                            isLogin = true
-                                                        )
-                                                    )
-                                                }
-                                            }
-
-                                            is Result.Error -> {
-                                                showDialog = true
-                                            }
-                                        }
-                                    }
-                                Log.d("TAG", "TERTEKAN")
-                            }
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row {
-                        Text(
-                            text = stringResource(R.string.don_t_have_account),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            textAlign = TextAlign.Center
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        ClickableText(
-                            text = AnnotatedString(stringResource(id = R.string.welcome_text_sign_up)),
-                            style = TextStyle(
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary,
-                                textAlign = TextAlign.Center,
-                                textDecoration = TextDecoration.Underline
-                            ),
-                            onClick = { navController?.navigate(Screen.SIGN_UP.name) }
-                        )
-                    }
                 }
             }
         }

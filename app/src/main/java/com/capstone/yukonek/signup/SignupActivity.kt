@@ -91,165 +91,163 @@ fun MainViewSignUp(
 
     var showDialog by remember { mutableStateOf(false) }
 
-    YuKonekTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-        ) { innerPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+    ) { innerPadding ->
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(24.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                item {
-                    Text(
-                        text = stringResource(R.string.sign_up),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.create_your_account),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.alpha(0.5F)
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Text(
+                    text = stringResource(R.string.sign_up),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.create_your_account),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.alpha(0.5F)
 
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyTextTextField(
-                        text = name,
-                        onTextChange = {
-                            name = it
-                            nameError = if (name.isNotEmpty()) null else "Name cannot be empty"
-                        },
-                        label = stringResource(R.string.username),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        ),
-                        isError = nameError != null,
-                        errorMessage = nameError
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyEmailTextField(
-                        email = email,
-                        onEmailChange = {
-                            email = it
-                            emailError = if (isValidEmail(email)) null else "Invalid email address"
-                        },
-                        label = stringResource(R.string.email),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        ),
-                        isError = emailError != null,
-                        errorMessage = emailError
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (progressBarVisible) {
-                        Column {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
-                        }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyTextTextField(
+                    text = name,
+                    onTextChange = {
+                        name = it
+                        nameError = if (name.isNotEmpty()) null else "Name cannot be empty"
+                    },
+                    label = stringResource(R.string.username),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = nameError != null,
+                    errorMessage = nameError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyEmailTextField(
+                    email = email,
+                    onEmailChange = {
+                        email = it
+                        emailError = if (isValidEmail(email)) null else "Invalid email address"
+                    },
+                    label = stringResource(R.string.email),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = emailError != null,
+                    errorMessage = emailError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                if (progressBarVisible) {
+                    Column {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
                     }
-                    MyPasswordTextField(
-                        password = password,
-                        onPasswordChange = {
-                            password = it
-                            passwordError =
-                                if (isValidPassword(password)) null else "Password must be at least 8 characters"
-                        },
-                        onTrailingIconClick = { hidePassword = !hidePassword },
-                        hidePassword = hidePassword,
-                        label = stringResource(R.string.password),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        ),
-                        isError = passwordError != null,
-                        errorMessage = passwordError
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyPasswordTextField(
-                        password = confirmPassword,
-                        onPasswordChange = {
-                            confirmPassword = it
-                            confirmPasswordError = if (doPasswordsMatch(
-                                    password,
-                                    confirmPassword
-                                )
-                            ) null else "Passwords do not match"
-                        },
-                        onTrailingIconClick = { hidePasswordConfirm = !hidePasswordConfirm },
-                        hidePassword = hidePasswordConfirm,
-                        label = stringResource(R.string.confirmation_password),
-                        textStyle = TextStyle(
-                            fontSize = 12.sp,
-                            fontStyle = FontStyle.Normal
-                        ),
-                        isError = confirmPasswordError != null,
-                        errorMessage = confirmPasswordError
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    MyButton(
-                        text = "Create Account",
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = isSignUpButtonEnabled,
-                        onClick = {
-                            coroutineScope.launch {
-                                viewModel.register(name, email, password, confirmPassword)
-                                    .observe(context as ComponentActivity) { result ->
-                                        when (result) {
-                                            is Result.Loading -> {
-                                                progressBarVisible = true
-                                            }
+                }
+                MyPasswordTextField(
+                    password = password,
+                    onPasswordChange = {
+                        password = it
+                        passwordError =
+                            if (isValidPassword(password)) null else "Password must be at least 8 characters"
+                    },
+                    onTrailingIconClick = { hidePassword = !hidePassword },
+                    hidePassword = hidePassword,
+                    label = stringResource(R.string.password),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = passwordError != null,
+                    errorMessage = passwordError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyPasswordTextField(
+                    password = confirmPassword,
+                    onPasswordChange = {
+                        confirmPassword = it
+                        confirmPasswordError = if (doPasswordsMatch(
+                                password,
+                                confirmPassword
+                            )
+                        ) null else "Passwords do not match"
+                    },
+                    onTrailingIconClick = { hidePasswordConfirm = !hidePasswordConfirm },
+                    hidePassword = hidePasswordConfirm,
+                    label = stringResource(R.string.confirmation_password),
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontStyle = FontStyle.Normal
+                    ),
+                    isError = confirmPasswordError != null,
+                    errorMessage = confirmPasswordError
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                MyButton(
+                    text = "Create Account",
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = isSignUpButtonEnabled,
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.register(name, email, password, confirmPassword)
+                                .observe(context as ComponentActivity) { result ->
+                                    when (result) {
+                                        is Result.Loading -> {
+                                            progressBarVisible = true
+                                        }
 
-                                            is Result.Success -> {
-                                                progressBarVisible = true
-                                                navController?.navigate(Screen.SIGN_IN.name)
-                                            }
+                                        is Result.Success -> {
+                                            progressBarVisible = true
+                                            navController?.navigate(Screen.SIGN_IN.name)
+                                        }
 
-                                            is Result.Error -> {
-                                                progressBarVisible = true
-                                                showDialog = true
-                                            }
+                                        is Result.Error -> {
+                                            progressBarVisible = true
+                                            showDialog = true
                                         }
                                     }
-                                Log.d("TAG", "TERTEKAN")
-                            }
-                        })
-                }
+                                }
+                            Log.d("TAG", "TERTEKAN")
+                        }
+                    })
             }
-            if (showDialog) {
-                AlertDialog(
-                    onDismissRequest = { showDialog = false },
-                    title = { Text(text = "Logout Confirmation") },
-                    text = { Text("Are you sure you want to logout?") },
-                    confirmButton = {
-                        TextButton(onClick = {
-                            showDialog = false
-                            coroutineScope.launch {
-                                progressBarVisible = true
-                                Log.d("TAG", "TERTEKAN")
-                            }
-                        }) {
-                            Text("Yes")
+        }
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { Text(text = "Logout Confirmation") },
+                text = { Text("Are you sure you want to logout?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog = false
+                        coroutineScope.launch {
+                            progressBarVisible = true
+                            Log.d("TAG", "TERTEKAN")
                         }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { showDialog = false }) {
-                            Text("No")
-                        }
+                    }) {
+                        Text("Yes")
                     }
-                )
-            }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        Text("No")
+                    }
+                }
+            )
         }
     }
 }

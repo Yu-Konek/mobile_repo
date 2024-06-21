@@ -64,7 +64,9 @@ class SettingPreferencesDataStore private constructor(private val dataStore: Dat
 
     suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences.clear()
+//            preferences.clear()
+            preferences[TOKEN_KEY] = ""
+            preferences[IS_LOGIN_KEY] = false
         }
     }
 
